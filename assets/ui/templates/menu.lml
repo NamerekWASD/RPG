@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE table SYSTEM "dtd\lml.dtd">
+
+<table onecolumn="true" defaultpad="6" tablealign="bottomRight" fillparent="true" defaultfillx="true">
+	<textbutton onchange="startGame">@play</textbutton>
+	<!-- "show:settings" will automatically show the settings.lml dialog when button is clicked. -->
+	<textbutton onchange="goto:settings">@settings</textbutton>
+	<!-- "app:exit" will automatically try to exit the application when the button is clicked. -->
+	<textbutton onchange="app:exit">@exit</textbutton>
+</table>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="33">
+ <tileset firstgid="1" source="newTileSet.tsx"/>
+ <layer id="1" name="tilesLayer" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztzLEKACAIQEFrKej//7faWoQ2lzt4gyJGAAAAQJ2VzOM0P+7fffbr6sW14jasEACy
+  </data>
+ </layer>
+ <objectgroup id="2" name="Collision" tintcolor="#000000">
+  <object id="31" x="896" y="1920">
+   <properties>
+    <property name="type" value="object"/>
+   </properties>
+   <polygon points="0,0 -64,-64 -128,0"/>
+  </object>
+  <object id="32" x="0" y="1920">
+   <properties>
+    <property name="color" value="none"/>
+    <property name="type" value="object"/>
+   </properties>
+   <polygon points="0,0 2048,0 2048,128 0,128"/>
+  </object>
+ </objectgroup>
+</map>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE table SYSTEM "dtd\lml.dtd">
+
+<table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="frame" align="center" >
+	<label textalign="center">@settings</label>
+	<textbutton onchange="goto:volume">@volumeMaster</textbutton>
+	<textbutton onchange="goto:locale">@locale</textbutton>
+	<!-- "close" action is defined in Global class. -->
+	<textbutton onchange="goto:menu">@back</textbutton>
+</table>

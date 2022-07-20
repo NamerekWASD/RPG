@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE :macro SYSTEM "dtd\lml.dtd">
+<!-- This is a custom macro that displays a TabbedPane's tab.
+	- name: becomes the title of the tab. Defaults to empty string. -->
+<:macro alias="setting" replace="content">
+<!-- "name" will be replaced with the value of the passed argument. -->
+<dialog title="{name}" close="true" onecolumn="true" defaultpad="1">
+	<!-- "content" will be replaced with the data between macro tags. -->
+	{content}
+</dialog>
+</:macro>

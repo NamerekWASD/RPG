@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE table SYSTEM "dtd\lml.dtd">
+
+<table id="dialog" defaultspace="15" tablealign="center" fillparent="true" onecolumn="true" background="frame" style="dialog">
+    <splitpane>
+        <table onecolumn="true" padright="15" defaultpad="5">
+            <label>@musicVolume</label>
+            <!-- Music-related methods are added by MusicService. -->
+            <slider value="$getMusicVolume" onchange="setMusicVolume" growx="true" />
+            <checkbox onchange="toggleMusic" checked="$musicOn"> @toggleMusic</checkbox>
+        </table>
+        <table onecolumn="true" padleft="15" defaultpad="5">
+            <label>@soundVolume</label>
+            <!-- Sound-related methods are added by MusicService. -->
+            <slider value="$getSoundVolume" onchange="setSoundVolume" growx="true" />
+            <checkbox onchange="toggleSound" checked="$soundOn"> @toggleSound</checkbox>
+        </table>
+    </splitpane>
+    <textbutton onchange="goto:settings">@back</textbutton>
+</table>

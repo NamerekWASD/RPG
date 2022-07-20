@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE table SYSTEM "dtd\lml.dtd">
+
+
+<table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="frame" style="dialog">
+    <:each locale="{locales}">
+        <:if test="{locale} != {currentLocale}">
+            <textbutton onchange="locale:{locale}">@{locale}</textbutton>
+        </:if>
+    </:each>
+    <textbutton onchange="goto:settings">@back</textbutton>
+</table>

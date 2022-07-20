@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE dialog SYSTEM "dtd\lml.dtd">
+
+<dialog id="dialog" movable="false">
+    <table fillparent="true" defaultpad="15" onecolumn="true">
+        <textbutton onchange="continue">@continue</textbutton>
+        <textbutton onchange="goto:menu">@back</textbutton>
+    </table>
+</dialog>
