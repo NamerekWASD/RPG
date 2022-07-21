@@ -21,9 +21,14 @@ public class Player extends Entity implements ControlListener {
     private static final float JUMP = 100f*PPM; // Jump force.
     private static final float CURRENT_SPEED = 0;
 
+
     private final PlayerControl playerControl;
     private final Viewport viewport;
+
+    private int healthPoints;
+    private int maxHealthPoints;
     private boolean jumped = false;
+
 
 
     private Hashtable<String, Animator> animator;
@@ -35,6 +40,7 @@ public class Player extends Entity implements ControlListener {
     private PlayerAction playerAction = PlayerAction.WALKING;
 
     private boolean isMovementDirectionLeft;
+
 
     public enum PlayerState{
         GROUNDED,
@@ -53,17 +59,26 @@ public class Player extends Entity implements ControlListener {
         this.playerControl = playerControl;
         this.viewport = viewport;
         body = createHitBox(200, 200, 64,128, false, world);
-        body.isBullet();
         playerControl.setControlListener(this);
         create();
     }
 
     public void create () {
         animator = new Hashtable<>();
+
+        setupAnimation();
+
+        maxHealthPoints = 100;
+
+        healthPoints = maxHealthPoints;
+    }
+
+    private void setupAnimation() {
         animator.put("idle", new Animator("images/animations/Idle.png", 2, 2));
         animator.put("walk", new Animator("images/animations/Walk.png", 4, 2));
         animator.put("jump", new Animator("images/animations/Jump.png", 1, 1));
     }
+
     public void update(final float delta) {
         playerControl.update(viewport, getBodyPosition().x, getBodyPosition().y);
 
@@ -178,5 +193,22 @@ public class Player extends Entity implements ControlListener {
                 playerState = PlayerState.FALLING;
             }
         }
+    }
+
+
+    public int getMaxHealthPoints() {
+        return maxHealthPoints;
+    }
+
+    public void setMaxHealthPoints(int maxHealthPoints) {
+        this.maxHealthPoints = maxHealthPoints;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
     }
 }

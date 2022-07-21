@@ -28,12 +28,13 @@ import com.company.rpgame.service.listeners.WorldListener;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Inject;
 
+import com.github.czyzby.lml.annotation.LmlAction;
+import com.github.czyzby.lml.parser.action.ActionContainer;
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 
 @Component
 public class Box2DService extends Game implements Screen {
-
     private Box2DDebugRenderer bdr;
 
     private Player player;
@@ -51,6 +52,14 @@ public class Box2DService extends Game implements Screen {
     private Status status;
 
     private ParticleEmitterTest particleEmitter;
+
+    public float getViewportHeight() {
+        return viewport.getScreenHeight();
+    }
+
+    public int getPlayerMaxHealthPoints() {
+        return player.getMaxHealthPoints();
+    }
 
     enum Status{
         RUN,
@@ -179,6 +188,10 @@ public class Box2DService extends Game implements Screen {
     public void initiateControls(final InputMultiplexer inputMultiplexer) {
         player.getControl().attachInputListener(inputMultiplexer);
         particleEmitter.attachInputListener(inputMultiplexer);
+    }
+
+    public int getPlayerHealthPoints (){
+        return player.getHealthPoints();
     }
 
     public boolean isRunning() {

@@ -2,11 +2,16 @@ package com.company.rpgame.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Null;
 import com.company.rpgame.controller.game.InGameSettingsController;
@@ -26,10 +31,20 @@ import java.lang.annotation.Annotation;
 
 @View(id="game", value = "ui/templates/game.lml")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer,ActionContainer {
+    private static final float SCALE = 2f;
+
     @Inject private InterfaceService interfaceService;
     @Inject private Box2DService world;
     @Inject private UIService uiService;
     private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
+    SpriteBatch batch;
+    Texture texture,texture2;
+
+    public GameController(){
+        batch = new SpriteBatch();
+
+        initTestObjects();
+    }
 
     @LmlAction("settings")
     public void settings(){
@@ -57,6 +72,11 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         stage.act(delta);
         world.render(delta);
         stage.draw();
+        batch.begin();
+        batch.draw(texture2,100,world.getViewportHeight() - 100, world.getPlayerMaxHealthPoints() * 2,20);
+        batch.draw(texture,100,world.getViewportHeight() - 100, world.getPlayerHealthPoints() * 2, 20);
+        batch.end();
+
     }
     @LmlAction("toggleWorldState")
     public void toggle(ImageButton button){
@@ -79,11 +99,36 @@ public class GameController extends StandardViewShower implements ViewResizer, V
             if (annotation == null) {
                 continue;
             }
-            if (annotation.annotationType().getAnnotation(ViewDialog.class) != null){
+            if (annotation.annotationType() == ViewDialog.class){
                 interfaceService.destroyDialog(tClass);
-            }else if (annotation.annotationType().getAnnotation(View.class) != null){
+            }else if (annotation.annotationType() == View.class){
                 interfaceService.destroy(tClass);
             }
         }
+    }
+
+
+    @LmlAction("getPlayerHealthPoints")
+    public int getPlayerHealthPoints(){
+        return world.getPlayerHealthPoints();
+    }
+
+    private void initTestObjects() {
+
+        int width =1 ;
+        int height = 1;
+        Pixmap pixmap = createProceduralPixmap(width, height,0,1,0);
+        Pixmap pixmap2 = createProceduralPixmap(width, height,1,0,0);
+
+        texture = new Texture(pixmap);
+        texture2 = new Texture(pixmap2);
+    }
+    private Pixmap createProceduralPixmap (int width, int height,int r,int g,int b) {
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+
+        pixmap.setColor(r, g, b, 1);
+        pixmap.fill();
+
+        return pixmap;
     }
 }

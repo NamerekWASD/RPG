@@ -43,9 +43,9 @@ public class WorldListener implements ContactListener {
     public void preSolve(Contact contact, Manifold oldManifold) {
         Transform transform = contact.getFixtureA().getBody().getTransform();
 
-        Transform colliderTransform = contact.getFixtureB().getBody().getTransform();
+        Fixture colliderFixture = contact.getFixtureB();
 
-        if (transform.getPosition().y < colliderTransform.getPosition().y * 2) {
+         if (transform.getPosition().y < colliderFixture.getBody().getTransform().getPosition().y) {
             contact.setFriction(0);
         } else {
             contact.setFriction(1);
