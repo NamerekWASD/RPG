@@ -2,49 +2,35 @@ package com.company.rpgame.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Null;
 import com.company.rpgame.controller.game.InGameSettingsController;
+import com.company.rpgame.service.ui.UIElementsService;
 import com.company.rpgame.service.Box2DService;
-import com.company.rpgame.service.UIService;
+import com.company.rpgame.service.ui.UIService;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewResizer;
 import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
-import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 
-import java.lang.annotation.Annotation;
-
 @View(id="game", value = "ui/templates/game.lml")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer,ActionContainer {
+
     private static final float SCALE = 2f;
 
+    private final SpriteBatch batch = new SpriteBatch();
     @Inject private InterfaceService interfaceService;
     @Inject private Box2DService world;
-    @Inject private UIService uiService;
-    private final Box2DDebugRenderer renderer = new Box2DDebugRenderer();
-    SpriteBatch batch;
-    Texture texture,texture2;
-
-    public GameController(){
-        batch = new SpriteBatch();
-
-        initTestObjects();
-    }
+    private UIElementsService uiElementsService;
 
     @LmlAction("settings")
     public void settings(){
@@ -55,6 +41,8 @@ public class GameController extends StandardViewShower implements ViewResizer, V
     @Override
     public void show(final Stage stage, final Action action){
         world.create();
+        uiElementsService = new UIElementsService(new UIService(), world.getPlayer());
+        uiElementsService.initiateHealthPointBar(new Vector2(50, Gdx.graphics.getHeight() - 75));
         super.show(stage, Actions.sequence(action, Actions.run(() -> { // Listening to user input events:
             final InputMultiplexer inputMultiplexer = new InputMultiplexer(stage);
             world.initiateControls(inputMultiplexer);
@@ -72,63 +60,15 @@ public class GameController extends StandardViewShower implements ViewResizer, V
         stage.act(delta);
         world.render(delta);
         stage.draw();
-        batch.begin();
-        batch.draw(texture2,100,world.getViewportHeight() - 100, world.getPlayerMaxHealthPoints() * 2,20);
-        batch.draw(texture,100,world.getViewportHeight() - 100, world.getPlayerHealthPoints() * 2, 20);
-        batch.end();
-
+        uiElementsService.render(delta, batch);
     }
+
     @LmlAction("toggleWorldState")
     public void toggle(ImageButton button){
-        if(world.isRunning()){
-            world.pause();
-            button.getStyle().imageChecked = uiService.getSkin().getDrawable("pause-btn");
-        }else {
-            resume(null);
-            button.getStyle().imageChecked = uiService.getSkin().getDrawable("play-btn");
-        }
+        uiElementsService.onToggle(button, world, interfaceService);
     }
 
     public <T> void resume(@Null Class<T> tClass) {
-        world.resume();
-        if(tClass == null){
-            return;
-        }
-        for (Annotation annotation:
-             tClass.getAnnotations()) {
-            if (annotation == null) {
-                continue;
-            }
-            if (annotation.annotationType() == ViewDialog.class){
-                interfaceService.destroyDialog(tClass);
-            }else if (annotation.annotationType() == View.class){
-                interfaceService.destroy(tClass);
-            }
-        }
-    }
-
-
-    @LmlAction("getPlayerHealthPoints")
-    public int getPlayerHealthPoints(){
-        return world.getPlayerHealthPoints();
-    }
-
-    private void initTestObjects() {
-
-        int width =1 ;
-        int height = 1;
-        Pixmap pixmap = createProceduralPixmap(width, height,0,1,0);
-        Pixmap pixmap2 = createProceduralPixmap(width, height,1,0,0);
-
-        texture = new Texture(pixmap);
-        texture2 = new Texture(pixmap2);
-    }
-    private Pixmap createProceduralPixmap (int width, int height,int r,int g,int b) {
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-
-        pixmap.setColor(r, g, b, 1);
-        pixmap.fill();
-
-        return pixmap;
+        uiElementsService.onResume(tClass, world, interfaceService);
     }
 }

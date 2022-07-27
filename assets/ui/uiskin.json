@@ -28,6 +28,11 @@
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable": {
+	"pause-btn": {
+		"region": "pause-btn",
+		"minWidth": 50,
+		"minHeight": 50
+	},
 	"set": {
 		"region": "set",
 		"minWidth": 50,
@@ -35,11 +40,6 @@
 	},
 	"play-btn": {
 		"region": "play-btn",
-		"minWidth": 50,
-		"minHeight": 50
-	},
-	"pause-btn": {
-		"region": "pause-btn",
 		"minWidth": 50,
 		"minHeight": 50
 	}

@@ -3,17 +3,19 @@ package com.company.rpgame.service.controls.controlType;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
+import com.company.rpgame.configuration.preferences.ControlsData;
 import com.company.rpgame.service.controls.AbstractButtonPlayerControl;
 import com.company.rpgame.service.controls.ControlType;
 
 public class KeyboardPlayerControl extends AbstractButtonPlayerControl {
     public KeyboardPlayerControl() {
     // Initial settings:
-    up = Input.Keys.W;
-    down = Input.Keys.S;
-    left = Input.Keys.A;
-    right = Input.Keys.D;
-    jump = Input.Keys.SPACE;
+    keys.put("up", Input.Keys.W);
+    keys.put("down", Input.Keys.S);
+    keys.put("left", Input.Keys.A);
+    keys.put("right", Input.Keys.D);
+    keys.put("jump", Input.Keys.SPACE);
+    keys.put("hurt", Input.Keys.ENTER);
 }
 
     @Override
@@ -21,12 +23,16 @@ public class KeyboardPlayerControl extends AbstractButtonPlayerControl {
         inputMultiplexer.addProcessor(new InputAdapter() {
             @Override
             public boolean keyDown(final int keycode) {
-                if (keycode == up || keycode == down || keycode == left || keycode == right) {
+                if (keycode == getKey("up") || keycode == getKey("down") ||
+                        keycode == getKey("left") || keycode == getKey("right")) {
                     pressedButtons.add(keycode);
                     updateMovement();
                     return true;
-                } else if (keycode == jump) {
+                } else if (keycode == getKey("jump")) {
                     getListener().jump();
+                    return true;
+                } else if (keycode == getKey("hurt")) {
+                    getListener().hurt();
                     return true;
                 }
                 return false;
@@ -34,7 +40,8 @@ public class KeyboardPlayerControl extends AbstractButtonPlayerControl {
 
             @Override
             public boolean keyUp(final int keycode) {
-                if (keycode == up || keycode == down || keycode == left || keycode == right) {
+                if (keycode == getKey("up") || keycode == getKey("down") ||
+                        keycode == getKey("left") || keycode == getKey("right")) {
                     pressedButtons.remove(keycode);
                     updateMovement();
                     return true;
@@ -42,6 +49,11 @@ public class KeyboardPlayerControl extends AbstractButtonPlayerControl {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void copy(ControlsData data) {
+
     }
 
     @Override

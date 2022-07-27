@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -28,8 +29,6 @@ import com.company.rpgame.service.listeners.WorldListener;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Inject;
 
-import com.github.czyzby.lml.annotation.LmlAction;
-import com.github.czyzby.lml.parser.action.ActionContainer;
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 
@@ -41,7 +40,7 @@ public class Box2DService extends Game implements Screen {
     private World world;
     private TiledMap map;
 
-    private Viewport viewport = new FitViewport(Application.WIDTH, Application.HEIGHT);
+    private final Viewport viewport = new FitViewport(Application.WIDTH, Application.HEIGHT);
 
     private OrthogonalTiledMapRenderer tmr;
 
@@ -53,19 +52,14 @@ public class Box2DService extends Game implements Screen {
 
     private ParticleEmitterTest particleEmitter;
 
-    public float getViewportHeight() {
-        return viewport.getScreenHeight();
-    }
-
-    public int getPlayerMaxHealthPoints() {
-        return player.getMaxHealthPoints();
+    public Player getPlayer() {
+        return player;
     }
 
     enum Status{
         RUN,
         PAUSE
     }
-
 
     @Override
     public void create() {
@@ -113,7 +107,7 @@ public class Box2DService extends Game implements Screen {
         }else{
             Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
         }
-        player.draw(batch, delta);
+        player.render(batch, delta);
         bdr.render(world, viewport.getCamera().combined.scl(PPM));
         tmr.render();
         viewport.apply();

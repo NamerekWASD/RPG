@@ -19,6 +19,7 @@ import java.util.Hashtable;
 public class Player extends Entity implements ControlListener {
     private static final float SPEED = .25f*PPM; // Movement force.
     private static final float JUMP = 100f*PPM; // Jump force.
+
     private static final float CURRENT_SPEED = 0;
 
 
@@ -40,6 +41,7 @@ public class Player extends Entity implements ControlListener {
     private PlayerAction playerAction = PlayerAction.WALKING;
 
     private boolean isMovementDirectionLeft;
+    private boolean isHurt;
 
 
     public enum PlayerState{
@@ -86,6 +88,11 @@ public class Player extends Entity implements ControlListener {
 
         if(jumped){
             applyJumpVelocity(body);
+            jumped = false;
+        }
+        if(isHurt){
+            setHealthPoints(getHealthPoints() - 10);
+            isHurt = false;
         }
 
         resolveEntityState();
@@ -93,43 +100,43 @@ public class Player extends Entity implements ControlListener {
 
         body.setActive(true);
         body.setLinearVelocity(movement.x * SPEED, body.getLinearVelocity().y);
-        jumped = false;
+
+        updateAnimation();
     }
 
 
+    private void updateAnimation() {
+        switch (playerState){
+            case GROUNDED:
+                switch (playerAction){
+                    case IDLE:
+                        currentAnimator = animator.get("idle");
+                        break;
+                    case WALKING:
+                        currentAnimator = animator.get("walk");
+                        break;
+                    case ATTACK:
+                        currentAnimator = animator.get("attack");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case JUMPED:
+                currentAnimator = animator.get("jump");
+                break;
+            case FALLING:
+                currentAnimator = animator.get("jump");
+                break;
+            default:
+                break;
+        }
+    }
 
     public void render(final SpriteBatch batch, final float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        updateAnimation();
         currentAnimator.render(batch, getPlayerPosition(), delta, isMovementDirectionLeft);
-    }
-    public void draw(final SpriteBatch batch, final float delta){
-
-            switch (playerState){
-                case GROUNDED:
-                    switch (playerAction){
-                        case IDLE:
-                            currentAnimator = animator.get("idle");
-                            break;
-                        case WALKING:
-                            currentAnimator = animator.get("walk");
-                            break;
-                        case ATTACK:
-                            currentAnimator = animator.get("attack");
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case JUMPED:
-                    currentAnimator = animator.get("jump");
-                    break;
-                case FALLING:
-                    currentAnimator = animator.get("jump");
-                    break;
-                default:
-                    break;
-        }
-        render(batch, delta);
     }
 
     private static void applyJumpVelocity(Body body) {
@@ -151,15 +158,20 @@ public class Player extends Entity implements ControlListener {
         jumped = true;
     }
 
+    @Override
+    public void hurt() {
+        isHurt = true;
+    }
+
     public Vector2 getPlayerPosition(){
         return new Vector2(getBodyPosition().x * PPM - (64f/2f),
                 getBodyPosition().y * PPM - (128f/2f));
     }
 
-
     public void setPlayerState(PlayerState playerState){
         this.playerState = playerState;
     }
+
     @Override
     public void dispose(){
         for (Animator animator :

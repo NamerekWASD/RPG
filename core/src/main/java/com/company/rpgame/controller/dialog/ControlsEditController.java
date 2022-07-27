@@ -61,15 +61,15 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
                 }
                 final KeyboardPlayerControl keyboardControl = (KeyboardPlayerControl) playerControl;
                 if (checkedButton == keyUp) {
-                    keyboardControl.setUp(keycode);
+                    keyboardControl.setKey("up",keycode);
                 } else if (checkedButton == keyDown) {
-                    keyboardControl.setDown(keycode);
+                    keyboardControl.setKey("down",keycode);
                 } else if (checkedButton == keyLeft) {
-                    keyboardControl.setLeft(keycode);
+                    keyboardControl.setKey("left",keycode);
                 } else if (checkedButton == keyRight) {
-                    keyboardControl.setRight(keycode);
+                    keyboardControl.setKey("right",keycode);
                 } else if (checkedButton == keyJump) {
-                    keyboardControl.setJump(keycode);
+                    keyboardControl.setKey("jump",keycode);
                 }
                 checkedButton.setText(Keys.toString(keycode));
                 checkedButton.setChecked(false);
@@ -100,9 +100,9 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
         final InputMultiplexer inputMultiplexer = new InputMultiplexer();
         playerControl.attachInputListener(inputMultiplexer);
 
-        playerControl.setControlListener(() ->
+        /*playerControl.setControlListener(() ->
                 mockUpEntity.addAction(Actions.sequence(Actions.fadeOut(0.1f),
-                        Actions.fadeIn(0.1f))));
+                        Actions.fadeIn(0.1f))));*/
 
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -111,11 +111,11 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
     private void setCurrentControls() {
         if (playerControl.getType() == ControlType.KEYBOARD) {
             final KeyboardPlayerControl keyboardControl = (KeyboardPlayerControl) playerControl;
-            keyUp.setText(Keys.toString(keyboardControl.getUp()));
-            keyDown.setText(Keys.toString(keyboardControl.getDown()));
-            keyLeft.setText(Keys.toString(keyboardControl.getLeft()));
-            keyRight.setText(Keys.toString(keyboardControl.getRight()));
-            keyJump.setText(Keys.toString(keyboardControl.getJump()));
+            keyUp.setText(Keys.toString(keyboardControl.getKey("up")));
+            keyDown.setText(Keys.toString(keyboardControl.getKey("down")));
+            keyLeft.setText(Keys.toString(keyboardControl.getKey("left")));
+            keyRight.setText(Keys.toString(keyboardControl.getKey("right")));
+            keyJump.setText(Keys.toString(keyboardControl.getKey("jump")));
         }
     }
 

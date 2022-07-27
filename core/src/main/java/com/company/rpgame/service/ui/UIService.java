@@ -1,10 +1,9 @@
-package com.company.rpgame.service;
+package com.company.rpgame.service.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.github.czyzby.autumn.annotation.Component;
 
-@Component
 public class UIService {
     private Skin skin;
     private static final String DEFAULT_SKIN_PATH = "ui/uiskin.json";
