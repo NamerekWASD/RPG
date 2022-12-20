@@ -6,22 +6,19 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.company.rpgame.service.controls.PlayerControl;
-import com.company.rpgame.service.controls.ControlListener;
 import com.company.rpgame.service.controls.ControlType;
+import com.company.rpgame.service.controls.PlayerControl;
 import com.company.rpgame.service.controls.controlType.KeyboardPlayerControl;
+import com.company.rpgame.service.controls.controlType.PlayerControlKeys;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.autumn.mvc.stereotype.ViewStage;
@@ -43,11 +40,7 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
     private final MockUpdateAction updateAction = new MockUpdateAction();
 
     // Keyboard widgets:
-    @LmlActor("keyUp") private TextButton keyUp;
-    @LmlActor("keyDown") private TextButton keyDown;
-    @LmlActor("keyLeft") private TextButton keyLeft;
-    @LmlActor("keyRight") private TextButton keyRight;
-    @LmlActor("keyJump") private TextButton keyJump;
+    @LmlActor("keys") private Array<TextButton> keys;
     private final Actor keyboardListener = new Actor();
 
     public ControlsEditController() {
@@ -60,16 +53,11 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
                     return false;
                 }
                 final KeyboardPlayerControl keyboardControl = (KeyboardPlayerControl) playerControl;
-                if (checkedButton == keyUp) {
-                    keyboardControl.setKey("up",keycode);
-                } else if (checkedButton == keyDown) {
-                    keyboardControl.setKey("down",keycode);
-                } else if (checkedButton == keyLeft) {
-                    keyboardControl.setKey("left",keycode);
-                } else if (checkedButton == keyRight) {
-                    keyboardControl.setKey("right",keycode);
-                } else if (checkedButton == keyJump) {
-                    keyboardControl.setKey("jump",keycode);
+                for (TextButton key:
+                        keys) {
+                    if(checkedButton == key){
+                        keyboardControl.setKey(keyboardControl.getKey(keycode), keycode);
+                    }
                 }
                 checkedButton.setText(Keys.toString(keycode));
                 checkedButton.setChecked(false);
@@ -100,9 +88,8 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
         final InputMultiplexer inputMultiplexer = new InputMultiplexer();
         playerControl.attachInputListener(inputMultiplexer);
 
-        /*playerControl.setControlListener(() ->
-                mockUpEntity.addAction(Actions.sequence(Actions.fadeOut(0.1f),
-                        Actions.fadeIn(0.1f))));*/
+        mockUpEntity.addAction(Actions.sequence(Actions.fadeOut(0.1f),
+                Actions.fadeIn(0.1f)));
 
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -111,11 +98,12 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
     private void setCurrentControls() {
         if (playerControl.getType() == ControlType.KEYBOARD) {
             final KeyboardPlayerControl keyboardControl = (KeyboardPlayerControl) playerControl;
-            keyUp.setText(Keys.toString(keyboardControl.getKey("up")));
-            keyDown.setText(Keys.toString(keyboardControl.getKey("down")));
-            keyLeft.setText(Keys.toString(keyboardControl.getKey("left")));
-            keyRight.setText(Keys.toString(keyboardControl.getKey("right")));
-            keyJump.setText(Keys.toString(keyboardControl.getKey("jump")));
+
+            PlayerControlKeys[] values = PlayerControlKeys.values();
+            for (int i = 0, valuesLength = values.length; i < valuesLength; i++) {
+                PlayerControlKeys boundKey = values[i];
+                keys.items[i].setText(Keys.toString(keyboardControl.getKey(boundKey)));
+            }
         }
     }
 
