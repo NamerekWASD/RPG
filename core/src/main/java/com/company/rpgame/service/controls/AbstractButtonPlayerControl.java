@@ -4,22 +4,27 @@ import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.company.rpgame.configuration.preferences.ControlsData;
+import com.company.rpgame.service.controls.controlType.PlayerControlKeys;
+
+import static com.company.rpgame.service.controls.controlType.PlayerControlKeys.*;
 
 public abstract class AbstractButtonPlayerControl extends AbstractPlayerControl {
-    protected IntSet pressedButtons = new IntSet(4);
 
-    protected ObjectMap<String, Integer> keys = new ObjectMap<>();
+    protected IntSet pressedButtons = new IntSet();
+
+    protected ObjectMap<PlayerControlKeys, Integer> keys = new ObjectMap<>();
 
     /** Updates current movement according to button states. */
     protected void updateMovement() {
         if (pressedButtons.size == 0) {
             stop();
-        } else if (isPressed(getKey("left"))) { // Left.
+        } else if (isPressed(LEFT)) {
             movement.set(-1f, 0f);
-        } else if (isPressed(getKey("right"))) { // Right.
+        } else if (isPressed(RIGHT)) {
             movement.set(1f, 0f);
-        } else {
-            stop();
+        }
+        if (isPressed(JUMP)) {
+            getListener().jump();
         }
     }
 
@@ -30,8 +35,8 @@ public abstract class AbstractButtonPlayerControl extends AbstractPlayerControl 
 
     /** @param key button code.
      * @return true if button is currently pressed. */
-    protected boolean isPressed(final int key) {
-        return pressedButtons.contains(key);
+    protected boolean isPressed(final PlayerControlKeys key) {
+        return pressedButtons.contains(getKey(key));
     }
 
     @Override
@@ -51,13 +56,16 @@ public abstract class AbstractButtonPlayerControl extends AbstractPlayerControl 
         super.reset();
         pressedButtons.clear();
     }
-    public void setKey(String key, int value){
+    public void setKey(PlayerControlKeys key, int value){
         if(keys.containsKey(key)){
             keys.remove(key);
         }
         keys.put(key, value);
     }
-    public int getKey(String key){
+    public int getKey(PlayerControlKeys key){
         return keys.get(key);
+    }
+    public PlayerControlKeys getKey(int value){
+        return keys.findKey(value, true);
     }
 }
