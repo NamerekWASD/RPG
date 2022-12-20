@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-	compileSdkVersion 30
+	compileSdkVersion 33
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
@@ -31,8 +31,8 @@ android {
 	}
 	defaultConfig {
 		applicationId 'com.company.rpgame'
-		minSdkVersion 19
-		targetSdkVersion 30
+        minSdk 24
+        targetSdkVersion 33
 		versionCode 1
 		versionName "1.0"
 		multiDexEnabled true
@@ -49,6 +49,7 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+	buildToolsVersion '33.0.0'
 
 }
 
@@ -60,13 +61,19 @@ repositories {
 configurations { natives }
 
 dependencies {
-	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+	implementation project(path: ':core')
 	implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
-	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-	implementation "com.crashinvaders.lml:gdx-autumn-android:$lmlVersion"
 	implementation "com.github.MrStahlfelge.gdx-websockets:common:$websocketVersion"
 	implementation "de.tomgrill.gdxdialogs:gdx-dialogs-android:$dialogsVersion"
 	implementation project(':core')
+	//noinspection GradleDependency
+	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs_configuration:1.1.0'
+	implementation 'com.crashinvaders.lml:gdx-autumn-android:1.10.1.11.0'
+	implementation "com.crashinvaders.lml:gdx-autumn-mvc:1.10.1.11.0"
+	implementation "com.crashinvaders.lml:gdx-autumn:1.10.1.11.0"
+	implementation "com.crashinvaders.lml:gdx-kiwi:1.10.1.11.0"
+	implementation "com.crashinvaders.lml:gdx-lml:1.10.1.11.0"
 
 	natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
 	natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"

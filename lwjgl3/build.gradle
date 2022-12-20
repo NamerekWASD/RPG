@@ -10,11 +10,15 @@ dependencies {
 	implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
 	implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 	implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-	implementation "com.crashinvaders.lml:gdx-autumn-fcs:$lmlVersion"
 	implementation "com.github.MrStahlfelge.gdx-websockets:common:$websocketVersion"
 	implementation "de.tomgrill.gdxdialogs:gdx-dialogs-desktop:$dialogsVersion"
 	implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+	implementation "com.crashinvaders.lml:gdx-autumn-mvc:1.10.1.11.0"
+	implementation "com.crashinvaders.lml:gdx-autumn:1.10.1.11.0"
+	implementation "com.crashinvaders.lml:gdx-kiwi:1.10.1.11.0"
+	implementation "com.crashinvaders.lml:gdx-lml:1.10.1.11.0"
 	implementation project(':core')
+	implementation 'com.crashinvaders.lml:gdx-autumn-fcs:1.10.1.11.0'
 }
 
 def os = System.properties['os.name'].toLowerCase()
@@ -54,3 +58,5 @@ jar {
 // Equivalent to the jar task; here for compatibility with gdx-setup.
 task dist(dependsOn: [jar]) {
 }
+
+java.targetCompatibility = JavaVersion.VERSION_1_8
