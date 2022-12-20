@@ -1,0 +1,46 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "newMap.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "newMap.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 704,
+                "y": 4480
+            }
+        },
+        "newMap.tmx#House": {
+            "scaleInDock": 0.5
+        },
+        "newMap.tmx#newTileSet": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "C:/Users/Nykolai/IdeaProjects/RPG/assets/images",
+    "map.fixedSize": false,
+    "map.height": 64,
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": null,
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 64,
+    "openFiles": [
+        "newMap.tmx"
+    ],
+    "project": "newMap.tiled-project",
+    "recentFiles": [
+        "newMap.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
+}

@@ -1,6 +1,4 @@
-package com.company.rpgame.controller.settings;
-
-import static com.company.rpgame.configuration.Configuration.PREFERENCES;
+package com.company.rpgame.controller.setting;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +9,8 @@ import com.github.czyzby.autumn.mvc.stereotype.preference.sfx.MusicEnabled;
 import com.github.czyzby.autumn.mvc.stereotype.preference.sfx.MusicVolume;
 import com.github.czyzby.autumn.mvc.stereotype.preference.sfx.SoundEnabled;
 import com.github.czyzby.autumn.mvc.stereotype.preference.sfx.SoundVolume;
+
+import static com.company.rpgame.configuration.Configuration.PREFERENCES;
 
 @View(id="volume", value="ui/templates/settings/volume.lml")
 public class VolumeController implements ViewRenderer {

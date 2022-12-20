@@ -1,4 +1,4 @@
-package com.company.rpgame.controller.settings;
+package com.company.rpgame.controller.setting;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

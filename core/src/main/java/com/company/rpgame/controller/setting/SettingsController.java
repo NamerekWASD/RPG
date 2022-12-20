@@ -1,25 +1,21 @@
-package com.company.rpgame.controller.settings;
+package com.company.rpgame.controller.setting;
 
 	import com.badlogic.gdx.Gdx;
 	import com.badlogic.gdx.Graphics;
-	import com.badlogic.gdx.Screen;
-	import com.badlogic.gdx.graphics.GL20;
-	import com.badlogic.gdx.graphics.Texture;
-	import com.badlogic.gdx.scenes.scene2d.Actor;
+    import com.badlogic.gdx.graphics.GL20;
+    import com.badlogic.gdx.scenes.scene2d.Actor;
 	import com.badlogic.gdx.scenes.scene2d.Stage;
 	import com.badlogic.gdx.utils.Array;
 	import com.badlogic.gdx.utils.ObjectSet;
-	import com.company.rpgame.service.controls.DisplayService;
-	import com.github.czyzby.autumn.annotation.Initiate;
-	import com.github.czyzby.autumn.annotation.Inject;
+	import com.company.rpgame.service.DisplayService;
+    import com.github.czyzby.autumn.annotation.Inject;
 	import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 	import com.github.czyzby.autumn.mvc.component.ui.controller.impl.StandardViewShower;
 	import com.github.czyzby.autumn.mvc.stereotype.View;
 	import com.github.czyzby.kiwi.util.gdx.collection.GdxArrays;
 	import com.github.czyzby.kiwi.util.gdx.collection.GdxSets;
 	import com.github.czyzby.lml.annotation.LmlAction;
-	import com.github.czyzby.lml.annotation.LmlActor;
-	import com.github.czyzby.lml.parser.action.ActionContainer;
+    import com.github.czyzby.lml.parser.action.ActionContainer;
 	import com.github.czyzby.lml.util.LmlUtilities;
 
 /** This is a settings dialog, which can be shown in any view by using "show:settings" LML action or - in Java code -

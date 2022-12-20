@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="64" height="72" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="12">
+ <tileset firstgid="1" name="newTileSet" tilewidth="64" tileheight="64" tilecount="12" columns="3">
+  <image source="../../images/newTileSet.png" width="192" height="256"/>
+ </tileset>
+ <tileset firstgid="13" name="House" tilewidth="64" tileheight="64" tilecount="64" columns="8">
+  <image source="../../images/House.png" width="512" height="512"/>
+ </tileset>
+ <objectgroup id="4" name="Collision" class="123">
+  <object id="5" name="floor" class="object" x="0" y="4480">
+   <properties>
+    <property name="bodyType" value="StaticBody"/>
+    <property name="type" value="object"/>
+   </properties>
+   <polygon points="0,0 2880,0 2880,128 0,128"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Utils">
+  <object id="10" name="spawnPoint" x="704" y="4480">
+   <point/>
+  </object>
+ </objectgroup>
+ <layer id="3" name="1Layer" width="64" height="72">
+  <data encoding="base64" compression="zlib">
+   eJzty+1OAXAYQHF8JzGURsVEmvehtPK2SN3//TgX4b89tvPbzseTyUiSJEmSJEmSJEmSJEmSJEmSJEmSJEmSoshTgW6oSLdUonLiN4oKValGd3RPdXpI/EbRoCY90hM9U4vaid8oOvRCXerRK/XpLfEbxYCGNKIxTWhKs8RvFHNa0JLe6YNW9Jn4jeKLvmlNG9rSjvaJ3yh+6EBH+qUT/dF/4jeC3BV2Sdkr7JLORDATyA==
+  </data>
+ </layer>
+</map>
