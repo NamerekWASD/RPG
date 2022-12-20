@@ -1,4 +1,4 @@
-package com.company.rpgame.service.controls;
+package com.company.rpgame.service;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
