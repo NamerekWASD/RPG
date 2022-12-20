@@ -3,24 +3,21 @@ package com.company.rpgame.service.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.github.czyzby.autumn.annotation.Component;
+import com.github.czyzby.autumn.annotation.Inject;
+import com.github.czyzby.autumn.mvc.component.ui.SkinService;
 
-public class UIService {
-    private Skin skin;
-    private static final String DEFAULT_SKIN_PATH = "ui/uiskin.json";
 
-    public UIService(){
-        try {
-            skin = new Skin(Gdx.files.internal(DEFAULT_SKIN_PATH));
-        }catch (Exception e){
-            System.console().printf(e.getMessage());
-        }
+@Component
+public class UIService{
+    @Inject
+    private static SkinService skinService;
+
+    public static Skin getSkin() {
+        return skinService.getSkin();
     }
 
-    public Skin getSkin() {
-        return skin;
+    public static void addSkin(String id, String skinPath) {
+        skinService.addSkin(id, new Skin(Gdx.files.internal(skinPath)));
     }
 
-    public void setSkin(String skinPath) {
-        skin = new Skin(Gdx.files.internal(skinPath));
-    }
 }
