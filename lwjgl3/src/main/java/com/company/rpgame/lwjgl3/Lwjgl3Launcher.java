@@ -2,14 +2,14 @@ package com.company.rpgame.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.company.rpgame.Application;
 import com.github.czyzby.autumn.fcs.scanner.DesktopClassScanner;
 import com.github.czyzby.autumn.mvc.application.AutumnApplication;
-import com.company.rpgame.Application;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
 	public static void main(String[] args) {
-		createApplication();
+		Lwjgl3Application application = createApplication();
 	}
 
 	private static Lwjgl3Application createApplication() {

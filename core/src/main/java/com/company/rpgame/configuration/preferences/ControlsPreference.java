@@ -28,7 +28,6 @@ public class ControlsPreference extends AbstractPreference<ControlsData> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected ControlsData convert(final String rawPreference) {
         return json.fromJson(ControlsData.class, Base64Coder.decodeString(rawPreference));
     }

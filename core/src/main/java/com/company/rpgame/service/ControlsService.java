@@ -16,7 +16,7 @@ public class ControlsService {
 
     @Initiate
     public void readControlsFromPreferences() {
-        playerControl = preference.getDefault().type.create(preference.getDefault());
+        playerControl = preference.getDefault().getType().create(preference.getDefault());
     }
 
     @Destroy(priority = AutumnActionPriority.TOP_PRIORITY)
