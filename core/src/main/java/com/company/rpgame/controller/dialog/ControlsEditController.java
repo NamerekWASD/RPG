@@ -28,7 +28,7 @@ import com.github.czyzby.lml.annotation.LmlActor;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 
 /** Allows to edit chosen controls. */
-@View(id = "edit", value = "ui/templates/edit.lml")
+@View(id = "edit", value = "lml/edit.lml")
 public class ControlsEditController implements ActionContainer, ViewDialogShower {
     @ViewStage private Stage stage;
     private PlayerControl playerControl;

@@ -34,7 +34,7 @@ public class Configuration implements ActionContainer {
 	@LmlParserSyntax private final LmlSyntax syntax = new DefaultLmlSyntax();
 
 	/** Parsing macros available in all views. */
-	@LmlMacro private final String globalMacro = "ui/templates/macros/global.lml";
+	@LmlMacro private final String globalMacro = "lml/macros/global.lml";
 
 	@StageViewport private final ObjectProvider<Viewport> viewportProvider = () ->
 			new FillViewport(Application.WIDTH/ Constants.APPLICATION_SCALE, Application.HEIGHT/Constants.APPLICATION_SCALE);

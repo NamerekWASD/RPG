@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Null;
-import com.company.rpgame.controller.dialog.InGameSettingsController;
-import com.company.rpgame.controller.dialog.InventoryController;
+import com.company.rpgame.controller.game.InGameSettingsController;
+import com.company.rpgame.controller.game.InventoryController;
 import com.company.rpgame.exception.NoSpawnPointException;
 import com.company.rpgame.service.entities.PlayerService;
 import com.company.rpgame.service.ui.ScreenService;
@@ -24,7 +24,7 @@ import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 
-@View(id="game", value = "ui/templates/game.lml")
+@View(id="game", value = "lml/game.lml")
 public class GameController extends StandardViewShower implements ViewResizer, ViewRenderer, ActionContainer, Disposable {
     @Inject private InterfaceService interfaceService;
     @Inject private Box2DService world;

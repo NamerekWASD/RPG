@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 
-@View(id="locale",value = "ui/templates/settings/locale.lml")
+@View(id="locale",value = "lml/settings/locale.lml")
 public class LocaleController implements ViewRenderer {
 
     @Override

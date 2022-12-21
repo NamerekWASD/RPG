@@ -20,7 +20,7 @@ import java.util.Arrays;
 import static com.company.rpgame.entity.base.EntityStateEnum.*;
 import static com.company.rpgame.helpers.Constants.PPM;
 
-public class Player extends Entity implements ControlListener {
+public class Player extends Entity implements ControlListener{
     private final EntityState playerState = new EntityState();
     private final ObjectMap<EntityStateEnum, EntityAnimator> animators = new ObjectMap<>();
     private final PlayerInventory inventory = new PlayerInventory();
@@ -94,23 +94,23 @@ public class Player extends Entity implements ControlListener {
         }
     }
 
+    public Vector2 getPlayerCenter(){
+        return new Vector2(getBodyPosition().x * PPM - (natureSize.getWidth()/2f),
+                getBodyPosition().y * PPM - (natureSize.getHeight()/2f));
+    }
     private Vector2 getPlayerMovement(){
         return playerControl.getMovementDirection();
     }
     public PlayerControl getControl() {
         return playerControl;
     }
+
     @Override
     public void jump() {
         if(playerState.getState() != Jump && playerState.getState() != Falling){
             jumped = true;
         }
     }
-    public Vector2 getPlayerCenter(){
-        return new Vector2(getBodyPosition().x * PPM - (natureSize.getWidth()/2f),
-                getBodyPosition().y * PPM - (natureSize.getHeight()/2f));
-    }
-
     @Override
     public void dispose(){
         animators.forEach(animator -> animator.value.dispose());

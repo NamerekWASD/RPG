@@ -21,7 +21,7 @@ package com.company.rpgame.controller.setting;
 /** This is a settings dialog, which can be shown in any view by using "show:settings" LML action or - in Java code -
 	 * through InterfaceService.showDialog(Class) method. Thanks to the fact that it implements ActionContainer, its methods
 	 * will be available in the LML template. */
-@View(id = "settings", value = "ui/templates/settings/settings.lml")
+@View(id = "settings", value = "lml/settings/settings.lml")
 public class SettingsController extends StandardViewShower implements ViewRenderer, ActionContainer {
 	@Inject
 	private DisplayService displayService;

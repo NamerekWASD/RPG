@@ -3,6 +3,7 @@ package com.company.rpgame.entity.base;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import com.company.rpgame.entity.data.EntityData;
 import com.company.rpgame.entity.data.EntityMovement;
 import com.company.rpgame.helpers.Box2D.BodyBuilder;
@@ -10,7 +11,7 @@ import com.company.rpgame.helpers.Box2D.components.Size;
 
 import static com.company.rpgame.helpers.Constants.PPM;
 
-public abstract class Entity {
+public abstract class Entity implements Disposable {
 
     private final EntityState entityState = new EntityState();
     private EntityData data = new EntityData(100);
@@ -50,7 +51,10 @@ public abstract class Entity {
 
     public abstract void update(final float delta);
 
-    public abstract void dispose();
+    @Override
+    public void dispose(){
+
+    }
 
     public EntityData getData() {
         return data;

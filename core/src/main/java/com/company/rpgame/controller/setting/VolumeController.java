@@ -12,7 +12,7 @@ import com.github.czyzby.autumn.mvc.stereotype.preference.sfx.SoundVolume;
 
 import static com.company.rpgame.configuration.Configuration.PREFERENCES;
 
-@View(id="volume", value="ui/templates/settings/volume.lml")
+@View(id="volume", value="lml/settings/volume.lml")
 public class VolumeController implements ViewRenderer {
     /** These sound-related fields allow MusicService to store settings in preferences file. Sound preferences will be
      * automatically saved when the application closes and restored the next time it's turned on. Sound-related methods

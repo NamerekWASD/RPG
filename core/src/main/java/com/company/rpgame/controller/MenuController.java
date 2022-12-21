@@ -1,23 +1,19 @@
 package com.company.rpgame.controller;
 
-	import com.badlogic.gdx.Screen;
-	import com.badlogic.gdx.graphics.Texture;
-	import com.badlogic.gdx.graphics.g2d.Batch;
-	import com.badlogic.gdx.scenes.scene2d.Stage;
-	import com.github.czyzby.autumn.annotation.Inject;
-	import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
-	import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
-	import com.github.czyzby.autumn.mvc.stereotype.Asset;
-	import com.github.czyzby.autumn.mvc.stereotype.View;
-	import com.github.czyzby.lml.annotation.LmlAction;
-	import com.github.czyzby.lml.parser.action.ActionContainer;
-
-	import net.dermetfan.gdx.scenes.scene2d.Scene2DUtils;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.github.czyzby.autumn.annotation.Inject;
+import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
+import com.github.czyzby.autumn.mvc.component.ui.controller.ViewRenderer;
+import com.github.czyzby.autumn.mvc.stereotype.Asset;
+import com.github.czyzby.autumn.mvc.stereotype.View;
+import com.github.czyzby.lml.annotation.LmlAction;
+import com.github.czyzby.lml.parser.action.ActionContainer;
 
 /** Thanks to View annotation, this class will be automatically found and initiated.
-	 *
 	 * This is application's main view, displaying a menu with several options. */
-	@View(id = "menu", value = "ui/templates/menu.lml", themes = "music/theme.ogg")
+	@View(id = "menu", value = "lml/menu.lml", themes = "music/theme.ogg")
 	public class MenuController implements ViewRenderer, ActionContainer {
 		/** Asset-annotated files will be found and automatically loaded by the AssetsService. */
 		@Asset("images/libgdx.png") private Texture logo;
