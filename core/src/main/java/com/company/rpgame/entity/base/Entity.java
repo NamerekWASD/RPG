@@ -14,10 +14,10 @@ import static com.company.rpgame.helpers.Constants.PPM;
 public abstract class Entity implements Disposable {
 
     private final EntityState entityState = new EntityState();
-    private EntityData data = new EntityData(100);
     private Body body;
     private Size bodySize;
-    protected EntityMovement movement = new EntityMovement();
+    protected EntityMovement movement;
+    protected EntityData data;
     public Entity(){}
 
     protected void createBody(World world, Vector2 position, Size size,

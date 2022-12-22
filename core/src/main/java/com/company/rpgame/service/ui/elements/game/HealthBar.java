@@ -13,6 +13,6 @@ public class HealthBar extends Bar {
     }
 
     public void update(){
-        setCurrentWidth(data.getPercentageOfHealthPoints());
+        setCurrentWidth(data.getPercentageOf(EntityData.EntityDataEnum.healthPoints));
     }
 }

@@ -13,5 +13,6 @@ public final class Constants {
     public static final short BIT_SENSOR = 4;
     public static final short BIT_NO_LIGHT = 8;
     public static final short BIT_BREAKABLE = 16;
-    public static final String IMAGES_PATH = "images";
+    public static final String IMAGES_DIRECTORY = "images";
+    public static final String ANIMATIONS_DIRECTORY = "animations";
 }

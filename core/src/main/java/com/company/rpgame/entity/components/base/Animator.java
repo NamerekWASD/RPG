@@ -1,15 +1,17 @@
 package com.company.rpgame.entity.components.base;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.JsonValue;
+import com.company.rpgame.helpers.AssetsUtil;
 import com.company.rpgame.helpers.Box2D.components.Size;
 import com.company.rpgame.helpers.JsonUtil;
 
+import static com.company.rpgame.helpers.Constants.ANIMATIONS_DIRECTORY;
+
 public abstract class Animator implements Disposable {
+    private static final String SHEET = "sheet";
     private final static float FrameRateMultiplier = 2f;
     protected Size frameSize;
     protected Animation<TextureRegion> animation;
@@ -18,19 +20,15 @@ public abstract class Animator implements Disposable {
     private int frameRows;
     protected float stateTime;
 
-    public Animator(String texturePath, String sheetDataPath){
-        sheet = new Texture(Gdx.files.internal(texturePath));
-        readProperties(sheetDataPath);
+    public Animator(String textureName, String sheetDataName){
+        sheet = AssetsUtil.getTexture(ANIMATIONS_DIRECTORY, textureName);
+        readProperties(sheetDataName);
         calculateColumnsAndRows();
         spreadTextures();
     }
 
-    private void readProperties(String sheetDataPath) {
-        JsonValue root = JsonUtil.readFromFile(sheetDataPath);
-        JsonValue size = JsonUtil.getProperty("Size", root);
-        int width = JsonUtil.getAsInt("width", size);
-        int height = JsonUtil.getAsInt("height", size);
-        frameSize = new Size(width, height);
+    private void readProperties(String sheetDataName) {
+        frameSize = JsonUtil.readTextureSize(sheetDataName + SHEET);
     }
 
     private void calculateColumnsAndRows(){

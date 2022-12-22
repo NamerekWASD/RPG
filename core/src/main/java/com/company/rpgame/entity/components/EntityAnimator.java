@@ -15,10 +15,10 @@ public class EntityAnimator extends Animator {
     private Vector2 currentPosition;
 
     public EntityAnimator(SpriteBatch batch,
-                          String texturePath,
-                          String SheetDataPath,
+                          String textureName,
+                          String SheetDataName,
                           Size bodySize) {
-        super(texturePath, SheetDataPath);
+        super(textureName, SheetDataName);
         this.batch = batch;
         findCenter(bodySize);
     }

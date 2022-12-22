@@ -2,7 +2,7 @@
 <!DOCTYPE dialog SYSTEM "dtd\lml.dtd">
 
 <dialog movable="false">
-    <table fillparent="true" defaultpad="15" onecolumn="true">
+    <table fillparent="true" defaultpad="16" onecolumn="true">
         <textbutton onchange="continue">@continue</textbutton>
         <textbutton onchange="goto:menu">@gotoMenu</textbutton>
     </table>

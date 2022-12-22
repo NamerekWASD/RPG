@@ -10,6 +10,8 @@ import com.company.rpgame.entity.base.Entity;
 import com.company.rpgame.entity.base.EntityState;
 import com.company.rpgame.entity.base.EntityStateEnum;
 import com.company.rpgame.entity.components.EntityAnimator;
+import com.company.rpgame.entity.data.EntityData;
+import com.company.rpgame.entity.data.EntityMovement;
 import com.company.rpgame.entity.items.basic.Item;
 import com.company.rpgame.helpers.Box2D.components.Size;
 import com.company.rpgame.service.controls.ControlListener;
@@ -23,7 +25,7 @@ import static com.company.rpgame.helpers.Constants.PPM;
 public class Player extends Entity implements ControlListener{
     private final EntityState playerState = new EntityState();
     private final ObjectMap<EntityStateEnum, EntityAnimator> animators = new ObjectMap<>();
-    private final PlayerInventory inventory = new PlayerInventory();
+    private final PlayerInventory inventory;
     private final PlayerControl playerControl;
     private final Viewport viewport;
     private final SpriteBatch batch;
@@ -40,6 +42,9 @@ public class Player extends Entity implements ControlListener{
         this.batch = batch;
         this.playerControl = playerControl;
         this.viewport = viewport;
+        this.inventory = new PlayerInventory();
+        this.movement = new EntityMovement();
+        this.data = new EntityData(100, 100);
         initializeBody(world, spawnPoint);
         playerControl.setControlListener(this);
         create();
@@ -60,10 +65,9 @@ public class Player extends Entity implements ControlListener{
     }
 
     private void setupAnimation() {
-        final String playerAnimationsPath = "animations/player/";
-
-        Arrays.stream(values()).forEach(state -> animators.put(state, new EntityAnimator(batch, playerAnimationsPath + state.name() + ".png",
-                playerAnimationsPath + "playerSheetData", getBodySize())));
+        Arrays.stream(values()).forEach(state -> animators.put(state,
+                new EntityAnimator(batch,  state.name(),
+                Player.class.getSimpleName(), getBodySize())));
     }
 
     public void render(final float delta) {

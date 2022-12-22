@@ -7,6 +7,8 @@ import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 import com.github.czyzby.lml.annotation.*;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 
+import static com.company.rpgame.service.ui.InventoryService.*;
+
 @ViewDialog(id="inventory", value = "lml/game/inventory.lml")
 public class InventoryController implements ActionContainer {
     @Inject
@@ -23,5 +25,25 @@ public class InventoryController implements ActionContainer {
     @LmlAction
     public int getCellCount(){
         return inventory.getCellCount();
+    }
+
+    @LmlAction
+    public static float getCellWidth() {
+        return ITEM_CELL_WIDTH;
+    }
+
+    @LmlAction
+    public static float getCellHeight() {
+        return ITEM_CELL_HEIGHT;
+    }
+
+    @LmlAction
+    public static float getEquipmentCellWidth() {
+        return EQUIPMENT_CELL_WIDTH;
+    }
+
+    @LmlAction
+    public static float getEquipmentCellHeight() {
+        return EQUIPMENT_CELL_HEIGHT;
     }
 }

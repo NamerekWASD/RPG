@@ -2,29 +2,39 @@ package com.company.rpgame.service.ui.elements.inventory;
 
 import com.badlogic.gdx.utils.Array;
 import com.company.rpgame.entity.items.basic.Item;
-
+import com.company.rpgame.helpers.JsonUtil;
+import lombok.val;
 
 
 public class ItemEquipped extends ItemCell{
-    private static final String packagePath = "com.company.rpgame.entity.items";
+    private static Array<Class<?>> acceptableClasses;
     private Class<?> acceptableClassItem;
-    public void setAcceptableClassItem(String classItem) {
-        classItem = classItem.replace("equipment", "");
-        String exactPath = "";
-        Array<String> armorPackage = new Array<>(new String[]{"Boots","Chest","Head","Legs"});
-        Array<String> basicPackage = new Array<>(new String[]{"Hand"});
 
-        if(armorPackage.contains(classItem, false)){
-            exactPath = ".armor";
-        } else if (basicPackage.contains(classItem, false) &&
-        classItem.equals("Hand")) {
-            classItem = "Equipable";
+    private void initiate(){
+        acceptableClasses = new Array<>();
+        Array<String> stringClasses = JsonUtil.readRules("inventory", "permissibleEquipmentClass");
+        for (val stringClass :
+                new Array.ArrayIterator<>(stringClasses)) {
+            try {
+                acceptableClasses.add(Class.forName(stringClass));
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void setAcceptableClassItem(String classItem) {
+        if(acceptableClasses == null){
+            initiate();
         }
 
-        try {
-            acceptableClassItem = Class.forName(packagePath + exactPath + "." + classItem);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        for (Class<?> acceptableClass :
+                new Array.ArrayIterator<>(acceptableClasses)) {
+            System.out.println(acceptableClass);
+            classItem = classItem.replace("equipment", "");
+            if(acceptableClass.getSimpleName().contains(classItem)){
+                acceptableClassItem = acceptableClass;
+            }
         }
     }
 

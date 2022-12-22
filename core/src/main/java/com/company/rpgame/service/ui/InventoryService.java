@@ -11,27 +11,27 @@ import com.badlogic.gdx.utils.Array.ArrayIterator;
 import com.company.rpgame.entity.items.basic.Item;
 import com.company.rpgame.entity.player.PlayerInventory;
 import com.company.rpgame.helpers.AssetsUtil;
+import com.company.rpgame.helpers.Box2D.components.Size;
+import com.company.rpgame.helpers.JsonUtil;
 import com.company.rpgame.service.entities.PlayerService;
 import com.company.rpgame.service.listeners.InventoryDragAndDrop;
 import com.company.rpgame.service.ui.elements.inventory.ItemCell;
 import com.company.rpgame.service.ui.elements.inventory.ItemEquipped;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Destroy;
+import com.github.czyzby.autumn.annotation.Initiate;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.asset.AssetService;
 import lombok.val;
 
 import java.util.Objects;
 
-import static com.company.rpgame.helpers.Constants.IMAGES_PATH;
+import static com.company.rpgame.helpers.Constants.IMAGES_DIRECTORY;
 import static com.company.rpgame.helpers.scene.ActorUtil.getActor;
 
 @Component
-public class InventoryService{
-    public static final int ITEM_CELL_WIDTH = 50,
-            ITEM_CELL_HEIGHT = 50,
-            EQUIPMENT_CELL_WIDTH = 64,
-            EQUIPMENT_CELL_HEIGHT = 64;
+public class InventoryService {
+    public static int ITEM_CELL_WIDTH, ITEM_CELL_HEIGHT, EQUIPMENT_CELL_WIDTH, EQUIPMENT_CELL_HEIGHT;
     @Inject
     private PlayerService playerService;
     @Inject
@@ -56,6 +56,15 @@ public class InventoryService{
         setupTables();
         initCells();
         initDragAndDrop();
+    }
+    @Initiate
+    private void importData() {
+        Size cellSize = JsonUtil.readTextureSize("cell");
+        Size equipmentCellSize = JsonUtil.readTextureSize("equipment");
+        ITEM_CELL_WIDTH = (int) cellSize.getWidth();
+        ITEM_CELL_HEIGHT = (int) cellSize.getHeight();
+        EQUIPMENT_CELL_WIDTH = (int) equipmentCellSize.getWidth();
+        EQUIPMENT_CELL_HEIGHT = (int) equipmentCellSize.getHeight();
     }
 
     private void setupTables() {
@@ -88,7 +97,7 @@ public class InventoryService{
         ItemCell itemCell;
         Image cellImage = (Image) cell.getActor();
         String cellName = cellImage.getName();
-        Drawable drawable = AssetsUtil.getDrawable(IMAGES_PATH, cellName, null);
+        Drawable drawable = AssetsUtil.getDrawable(IMAGES_DIRECTORY, cellName);
         cellImage.setName(cellName + " " + index);
         if (type == CellType.Equip) {
             itemCell = new ItemEquipped();
@@ -170,4 +179,5 @@ public class InventoryService{
             itemCellArray = null;
         }
     }
+
 }

@@ -20,6 +20,8 @@ import com.github.czyzby.lml.parser.impl.DefaultLmlSyntax;
 import com.github.czyzby.lml.util.Lml;
 import lombok.val;
 
+import java.util.ArrayList;
+
 /** Thanks to the Component annotation, this class will be automatically found and processed.
  * This is a utility class that configures application settings. */
 @Component
@@ -58,8 +60,14 @@ public class Configuration implements ActionContainer {
 		Lml.EXTRACT_UNANNOTATED_METHODS = false;
 		Lml.INFO_LOGS_ON = true;
 
-		FileHandle assetsPath = Gdx.files.internal("images");
-		loadAssets(manager, assetsPath);
+		ArrayList<String> directories = new ArrayList<>();
+		directories.add("images");
+		directories.add("animations");
+		for (val directory :
+				directories) {
+			FileHandle assetsPath = Gdx.files.internal(directory);
+			loadAssets(manager, assetsPath);
+		}
 		manager.finishLoading();
 	}
 

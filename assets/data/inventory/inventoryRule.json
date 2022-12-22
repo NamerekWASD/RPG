@@ -1,0 +1,8 @@
+{
+  "permissibleEquipmentClass": ["com.company.rpgame.entity.items.armor.Boots",
+   "com.company.rpgame.entity.items.armor.Chest",
+    "com.company.rpgame.entity.items.armor.Head",
+    "com.company.rpgame.entity.items.armor.Legs",
+    "com.company.rpgame.entity.items.Equipable"]
+
+}

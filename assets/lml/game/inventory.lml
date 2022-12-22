@@ -3,21 +3,27 @@
 
 <dialog id="itemTable" background="frame" defaultalign="left" fillparent="true">
     <table id="inventoryContainer">
-        <table  id="equipmentTable" tablealign="topLeft" defaultpad="16" defaultalign="center" defaultwidth="64" defaultheight="64">
+        <table  id="equipmentTable"
+                tablealign="topLeft"
+                defaultpad="16"
+                defaultwidth="$getEquipmentCellWidth"
+                defaultheight="$getEquipmentCellHeight">
             <image id="equipmentHead" style="noImage" />
             <:row/>
-            <image id="equipmentHand" style="noImage"/>
+            <image id="Equipable" style="noImage"/>
             <image id="equipmentChest" style="noImage"/>
-            <image id="equipmentHand" style="noImage"/>
+            <image id="Equipable" style="noImage"/>
             <:row/>
             <image id="equipmentLegs" style="noImage"/>
             <:row/>
             <image id="equipmentBoots" style="noImage"/>
         </table>
-        <table id="itemCellTable" tablealign="topLeft" defaultpad="16">
+        <table id="itemCellTable" defaultpad="16"
+               defaultwidth="$getCellWidth"
+               defaultheight="$getCellHeight">
             <:loop times="$getCellCount">
                 <:if test="{loop:index}%4 = 0"><:row/></:if>
-                <image id="inventoryCell" style="noImage" width="50" height="50"/>
+                <image id="inventoryCell" style="noImage"/>
             </:loop>
         </table>
         <table id="buttonTable" tablealign="topRight" defaultpad="16">
