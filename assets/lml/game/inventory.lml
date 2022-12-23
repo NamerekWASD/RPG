@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE dialog SYSTEM "dtd\lml.dtd">
 
-<dialog id="itemTable" background="frame" defaultalign="left" fillparent="true">
-    <table id="inventoryContainer">
-        <table  id="equipmentTable"
-                tablealign="topLeft"
-                defaultpad="16"
-                defaultwidth="$getEquipmentCellWidth"
-                defaultheight="$getEquipmentCellHeight">
-            <image id="equipmentHead" style="noImage" />
+<dialog id="inventoryDialog" background="null" fillparent="true">
+    <table id="itemTable">
+        <table  id="equipmentTable" background="cframe-m"
+                defaultpad="8" defaultwidth="64" defaultheight="64">
+            <image style="null" visible="false"/>
+            <image style="equipmentHead" id="Head"/>
+            <image style="null" visible="false"/>
             <:row/>
-            <image id="Equipable" style="noImage"/>
-            <image id="equipmentChest" style="noImage"/>
-            <image id="Equipable" style="noImage"/>
+            <image style="equipable" id="equipable"/>
+            <image style="equipmentChest" id="Chest" />
+            <image style="equipable" id="equipable"/>
             <:row/>
-            <image id="equipmentLegs" style="noImage"/>
+            <image style="null" visible="false"/>
+            <image style="equipmentLegs" id="Legs"/>
+            <image style="null" visible="false"/>
             <:row/>
-            <image id="equipmentBoots" style="noImage"/>
+            <image style="null" visible="false"/>
+            <image style="equipmentBoots" id="Boots"/>
+            <image style="null" visible="false"/>
         </table>
-        <table id="itemCellTable" defaultpad="16"
-               defaultwidth="$getCellWidth"
-               defaultheight="$getCellHeight">
+        <table id="itemCellTable" defaultpad="4" background="backpack" minwidth="500" minheight="600">
             <:loop times="$getCellCount">
                 <:if test="{loop:index}%4 = 0"><:row/></:if>
-                <image id="inventoryCell" style="noImage"/>
+                <image style="inventoryCell" id="cell"/>
             </:loop>
         </table>
-        <table id="buttonTable" tablealign="topRight" defaultpad="16">
-            <imagebutton image="close-btn" onchange="continue" width="50" height="50"/>
-        </table>
+    </table>
+    <table id="buttonTable" tablealign="top" defaultpad="16" defaultwidth="50" defaultheight="50" fill="true">
+        <imagebutton image="close-btn" onchange="continue" />
     </table>
 </dialog>

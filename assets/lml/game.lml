@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE table SYSTEM "dtd\lml.dtd">
 
-<table fillparent="true" tablealign="topRight" onecolumn="true" defaultpad="16" defaultpadtop="50">
-    <imagebutton image="set" onchange="settings" width="50" height="50"/>
-    <imagebutton image="play-btn" onchange="toggleWorldState" width="50" height="50"/>
-    <imagebutton image="inventory" onchange="inventory" width="50" height="50"/>
+<table fillparent="true" tablealign="topRight">
+    <verticalgroup>
+        <table defaultsize="50" onecolumn="true" defaultpad="10" background="topRightFrame">
+            <imagebutton image="set" onchange="settings"/>
+            <imagebutton image="play-btn" onchange="toggleWorldState"/>
+            <imagebutton image="inventory" onchange="inventory"/>
+        </table>
+    </verticalgroup>
 </table>

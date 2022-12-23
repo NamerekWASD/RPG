@@ -5,39 +5,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Array.ArrayIterator;
 import com.company.rpgame.entity.items.basic.Item;
 import com.company.rpgame.entity.player.PlayerInventory;
-import com.company.rpgame.helpers.AssetsUtil;
-import com.company.rpgame.helpers.Box2D.components.Size;
-import com.company.rpgame.helpers.JsonUtil;
 import com.company.rpgame.service.entities.PlayerService;
-import com.company.rpgame.service.listeners.InventoryDragAndDrop;
-import com.company.rpgame.service.ui.elements.inventory.ItemCell;
-import com.company.rpgame.service.ui.elements.inventory.ItemEquipped;
+import com.company.rpgame.service.ui.elements.inventory.InventoryDragAndDrop;
+import com.company.rpgame.service.ui.elements.inventory.entities.ItemCell;
+import com.company.rpgame.service.ui.elements.inventory.entities.ItemEquipped;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Destroy;
-import com.github.czyzby.autumn.annotation.Initiate;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.asset.AssetService;
 import lombok.val;
 
 import java.util.Objects;
 
-import static com.company.rpgame.helpers.Constants.IMAGES_DIRECTORY;
 import static com.company.rpgame.helpers.scene.ActorUtil.getActor;
 
 @Component
 public class InventoryService {
-    public static int ITEM_CELL_WIDTH, ITEM_CELL_HEIGHT, EQUIPMENT_CELL_WIDTH, EQUIPMENT_CELL_HEIGHT;
     @Inject
     private PlayerService playerService;
     @Inject
     private AssetService assetService;
     private Array<ItemCell> itemCellArray;
-    private Dialog itemTable;
+    private Dialog inventoryDialog;
     private Table equipmentTable;
     private Table itemCellTable;
     private InventoryDragAndDrop inventoryDragAndDrop;
@@ -57,21 +50,11 @@ public class InventoryService {
         initCells();
         initDragAndDrop();
     }
-    @Initiate
-    private void importData() {
-        Size cellSize = JsonUtil.readTextureSize("cell");
-        Size equipmentCellSize = JsonUtil.readTextureSize("equipment");
-        ITEM_CELL_WIDTH = (int) cellSize.getWidth();
-        ITEM_CELL_HEIGHT = (int) cellSize.getHeight();
-        EQUIPMENT_CELL_WIDTH = (int) equipmentCellSize.getWidth();
-        EQUIPMENT_CELL_HEIGHT = (int) equipmentCellSize.getHeight();
-    }
-
     private void setupTables() {
         inventoryDragAndDrop = new InventoryDragAndDrop();
         itemCellArray = new Array<>();
         itemCellTable = (Table) getActor(stage,"itemCellTable");
-        itemTable = (Dialog) getActor(stage,"itemTable");
+        inventoryDialog = (Dialog) getActor(stage,"inventoryDialog");
         equipmentTable = (Table) getActor(stage,"equipmentTable");
     }
 
@@ -97,21 +80,16 @@ public class InventoryService {
         ItemCell itemCell;
         Image cellImage = (Image) cell.getActor();
         String cellName = cellImage.getName();
-        Drawable drawable = AssetsUtil.getDrawable(IMAGES_DIRECTORY, cellName);
+        if(cellName == null){
+            return;
+        }
         cellImage.setName(cellName + " " + index);
         if (type == CellType.Equip) {
             itemCell = new ItemEquipped();
-            drawable.setMinWidth(EQUIPMENT_CELL_WIDTH);
-            drawable.setMinHeight(EQUIPMENT_CELL_HEIGHT);
-            cellImage.setSize(EQUIPMENT_CELL_WIDTH, EQUIPMENT_CELL_HEIGHT);
             ((ItemEquipped) itemCell).setAcceptableClassItem(cellName);
         } else {
             itemCell = new ItemCell();
-            drawable.setMinWidth(ITEM_CELL_WIDTH);
-            drawable.setMinHeight(ITEM_CELL_HEIGHT);
-            cellImage.setSize(ITEM_CELL_WIDTH, ITEM_CELL_HEIGHT);
         }
-        cellImage.setDrawable(drawable);
         itemCell.setCell(cellImage);
         itemCellArray.add(itemCell);
     }
@@ -126,7 +104,7 @@ public class InventoryService {
                 item.setSavedCellId(itemCell.getCell().getName());
             }
             if(Objects.equals(item.getSavedCellId(), itemCell.getCell().getName())){
-                itemTable.addActor(item.getImage());
+                inventoryDialog.addActor(item.getImage());
                 itemCell.setItem(item);
                 return;
             }
@@ -141,14 +119,7 @@ public class InventoryService {
         return playerService.getMaxItemCount();
     }
 
-    @Destroy
-    public void onClose(){
-        if(inventoryDragAndDrop == null){
-            return;
-        }
-        playerService.updateInventory(collectData());
-        dispose();
-    }
+
     private PlayerInventory collectData(){
         itemCellArray = inventoryDragAndDrop.getItemCells();
         Array<Item> items = new Array<>();
@@ -179,5 +150,12 @@ public class InventoryService {
             itemCellArray = null;
         }
     }
-
+    @Destroy
+    public void onClose(){
+        if(inventoryDragAndDrop == null){
+            return;
+        }
+        playerService.updateInventory(collectData());
+        dispose();
+    }
 }

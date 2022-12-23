@@ -1,4 +1,4 @@
-package com.company.rpgame.service.listeners;
+package com.company.rpgame.service.ui.elements.inventory;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -10,8 +10,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Null;
 import com.company.rpgame.entity.items.basic.Item;
 import com.company.rpgame.helpers.Box2D.components.Size;
-import com.company.rpgame.service.ui.elements.inventory.ItemCell;
-import com.company.rpgame.service.ui.elements.inventory.ItemEquipped;
+import com.company.rpgame.service.ui.elements.inventory.entities.ItemCell;
+import com.company.rpgame.service.ui.elements.inventory.entities.ItemEquipped;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -37,6 +37,7 @@ public class InventoryDragAndDrop {
         }
     }
     private void setupSource(Actor actor) {
+
         normalizeDragAndDropActorHover(actor);
         dragAndDrop.addSource(new DragAndDrop.Source(actor) {
             @Null
@@ -128,7 +129,8 @@ public class InventoryDragAndDrop {
     }
 
     private void normalizeDragAndDropActorHover(Actor actor) {
-        dragAndDrop.setDragActorPosition(actor.getWidth()/2, -(actor.getHeight()/2));
+        Vector2 centered = new Vector2(actor.getWidth()/2, -(actor.getHeight()/2));
+        dragAndDrop.setDragActorPosition(centered.x, centered.y);
     }
 
 

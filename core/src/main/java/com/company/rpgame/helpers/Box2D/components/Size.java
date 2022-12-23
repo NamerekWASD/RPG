@@ -4,6 +4,9 @@ public final class Size {
     private float width;
     private float height;
 
+    public Size() {
+    }
+
     public Size(float width, float height){
         this.width = width;
         this.height = height;

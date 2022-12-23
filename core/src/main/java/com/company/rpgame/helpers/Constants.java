@@ -15,4 +15,5 @@ public final class Constants {
     public static final short BIT_BREAKABLE = 16;
     public static final String IMAGES_DIRECTORY = "images";
     public static final String ANIMATIONS_DIRECTORY = "animations";
+    public static final String TEXTURE_SIZE = "textureSize";
 }

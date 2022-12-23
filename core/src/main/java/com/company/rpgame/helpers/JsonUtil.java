@@ -3,39 +3,36 @@ package com.company.rpgame.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.company.rpgame.helpers.Box2D.components.Size;
 
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class JsonUtil {
     public static final String JSON = ".json";
-    public enum DataType{
+    public enum DataType {
         Data,
         Rule
     }
-    private static final String TEXTURE_SIZE = "textureSize";
-    public static Size readTextureSize(String resourceName){
-        JsonValue data = fetchData(resourceName, DataType.Data, TEXTURE_SIZE);
-
-        int width = getAsInt("width", data);
-        int height = getAsInt("height", data);
-        return new Size(width, height);
-    }
+    private static final Json json = new Json();
 
     public static Array<String> readRules(String rulesFileName, String propertyName) {
         JsonValue value = fetchData(rulesFileName, DataType.Rule, propertyName);
         return new Array<>(value.asStringArray());
     }
-
+    public static Size readSize(String resourceName, String propertyName){
+        JsonValue data = fetchData(resourceName, DataType.Data, propertyName);
+        return json.readValue(Size.class, data);
+    }
     public static JsonValue fetchData(String resourceName, DataType dataType, String propertyName){
-        FileHandle fileHandle = AssetsUtil.findFile("data",
+        FileHandle fileHandle = AssetsUtil.findFile(DataType.Data.name(),
                 resourceName + dataType.name() + JSON);
         if(fileHandle == null){
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("No such json file!" +
+                    "\nJson file name: " + resourceName);
         }
         JsonValue value = readFromFile(fileHandle.path());
         return getProperty(propertyName, value);
@@ -58,12 +55,9 @@ public class JsonUtil {
             }
         });
         if(jsonValue.get() == null)
-            throw new NullPointerException("Property does not exists.");
+            throw new NullPointerException("Property does not exists: " + property);
         return null;
     }
 
-    public static int getAsInt(String property, JsonValue parent){
-        return Objects.requireNonNull(getProperty(property, parent)).asInt();
-    }
 
 }

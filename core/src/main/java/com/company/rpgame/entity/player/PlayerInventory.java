@@ -2,9 +2,15 @@ package com.company.rpgame.entity.player;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
+import com.company.rpgame.entity.items.armor.Chest;
+import com.company.rpgame.entity.items.armor.Head;
+import com.company.rpgame.entity.items.basic.Armor;
 import com.company.rpgame.entity.items.weapon.melee.Sword;
 import com.company.rpgame.entity.items.basic.Item;
+import com.company.rpgame.helpers.AssetsUtil;
 import com.company.rpgame.service.ui.UIService;
+
+import static com.company.rpgame.helpers.Constants.IMAGES_DIRECTORY;
 
 
 public class PlayerInventory {
@@ -18,11 +24,23 @@ public class PlayerInventory {
         Sword sword = new Sword(10.0, 50.0, 10.0);
         sword.setImage(image);
         sword.setDescription("some sword");
+
         Image newImage = new Image(UIService.getSkin(), "set");
         Sword newSword = new Sword(10.0, 50.0, 10.0);
         newSword.setImage(newImage);
         newSword.setDescription("another one");
-        inventoryItems.add(sword, newSword);
+
+        Image chestPic = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "ironArmor"));
+        Armor chest = new Chest();
+        chest.setImage(chestPic);
+        chest.setDescription("someDesc");
+
+        Image helmPic = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "plasticHelm"));
+        Armor head = new Head();
+        head.setImage(helmPic);
+        head.setDescription("someDesc");
+
+        inventoryItems.add(sword, newSword, chest, head);
     }
 
     public Array<Item> getInventoryItems() {

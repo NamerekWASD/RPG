@@ -12,6 +12,7 @@ import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Initiate;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.asset.AssetService;
+import com.github.czyzby.autumn.mvc.component.ui.SkinService;
 import com.github.czyzby.autumn.mvc.stereotype.preference.*;
 import com.github.czyzby.kiwi.util.gdx.asset.lazy.provider.ObjectProvider;
 import com.github.czyzby.lml.parser.LmlSyntax;
@@ -31,7 +32,7 @@ public class Configuration implements ActionContainer {
 	/** Path to the internationalization bundle. */
 	@I18nBundle private final String bundlePath = "i18n/bundle";
 
-	@Skin private final String skinPath = "ui/uiskin.json";
+	@Skin private final String skinPath = "ui/atlas/main/uiskin.json";
 
 	@LmlParserSyntax private final LmlSyntax syntax = new DefaultLmlSyntax();
 
@@ -56,7 +57,7 @@ public class Configuration implements ActionContainer {
 	/** Thanks to the Initiate annotation, this method will be automatically invoked during context building. All
 	 * method's parameters will be injected with values from the context. */
 	@Initiate(priority = 10)
-	public void initiateConfiguration(final AssetService manager) {
+	public void initiateConfiguration(final AssetService assetService, final SkinService skinService) {
 		Lml.EXTRACT_UNANNOTATED_METHODS = false;
 		Lml.INFO_LOGS_ON = true;
 
@@ -66,11 +67,10 @@ public class Configuration implements ActionContainer {
 		for (val directory :
 				directories) {
 			FileHandle assetsPath = Gdx.files.internal(directory);
-			loadAssets(manager, assetsPath);
+			loadAssets(assetService, assetsPath);
 		}
-		manager.finishLoading();
-	}
 
+	}
 	private void loadAssets(AssetService manager, FileHandle assetsPath) {
 		for (val file :
 				assetsPath.list()) {

@@ -9,6 +9,7 @@ import com.company.rpgame.helpers.Box2D.components.Size;
 import com.company.rpgame.helpers.JsonUtil;
 
 import static com.company.rpgame.helpers.Constants.ANIMATIONS_DIRECTORY;
+import static com.company.rpgame.helpers.Constants.TEXTURE_SIZE;
 
 public abstract class Animator implements Disposable {
     private static final String SHEET = "sheet";
@@ -22,13 +23,9 @@ public abstract class Animator implements Disposable {
 
     public Animator(String textureName, String sheetDataName){
         sheet = AssetsUtil.getTexture(ANIMATIONS_DIRECTORY, textureName);
-        readProperties(sheetDataName);
+        frameSize = JsonUtil.readSize(sheetDataName + SHEET, TEXTURE_SIZE);
         calculateColumnsAndRows();
         spreadTextures();
-    }
-
-    private void readProperties(String sheetDataName) {
-        frameSize = JsonUtil.readTextureSize(sheetDataName + SHEET);
     }
 
     private void calculateColumnsAndRows(){

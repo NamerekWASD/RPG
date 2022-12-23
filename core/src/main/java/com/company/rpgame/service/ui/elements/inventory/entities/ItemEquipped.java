@@ -1,4 +1,4 @@
-package com.company.rpgame.service.ui.elements.inventory;
+package com.company.rpgame.service.ui.elements.inventory.entities;
 
 import com.badlogic.gdx.utils.Array;
 import com.company.rpgame.entity.items.basic.Item;
@@ -32,7 +32,7 @@ public class ItemEquipped extends ItemCell{
                 new Array.ArrayIterator<>(acceptableClasses)) {
             System.out.println(acceptableClass);
             classItem = classItem.replace("equipment", "");
-            if(acceptableClass.getSimpleName().contains(classItem)){
+            if(acceptableClass.getSimpleName().toLowerCase().contains(classItem.toLowerCase())){
                 acceptableClassItem = acceptableClass;
             }
         }

@@ -1,0 +1,13 @@
+
+utility.png
+size: 16, 16
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+null
+  rotate: false
+  xy: 2, 2
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,71 @@
+
+inventory.png
+size: 512, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+backpack
+  rotate: false
+  xy: 2, 404
+  size: 500, 600
+  split: 0, 0, 0, 0
+  pad: 0, 0, 0, 0
+  orig: 500, 600
+  offset: 0, 0
+  index: -1
+cframe-m
+  rotate: false
+  xy: 2, 2
+  size: 300, 400
+  orig: 300, 400
+  offset: 0, 0
+  index: -1
+equipable
+  rotate: false
+  xy: 304, 128
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+equipmentBoots
+  rotate: false
+  xy: 406, 338
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+equipmentChest
+  rotate: false
+  xy: 304, 62
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+equipmentHead
+  rotate: false
+  xy: 304, 194
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+equipmentLegs
+  rotate: false
+  xy: 406, 272
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+inventoryCell
+  rotate: false
+  xy: 304, 10
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+topRightFrame
+  rotate: false
+  xy: 304, 260
+  size: 100, 142
+  orig: 100, 142
+  offset: 0, 0
+  index: -1
