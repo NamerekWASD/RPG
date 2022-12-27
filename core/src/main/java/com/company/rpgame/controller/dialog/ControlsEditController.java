@@ -15,10 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.company.rpgame.service.controls.ControlType;
+import com.company.rpgame.service.controls.controlAbstract.ControlType;
 import com.company.rpgame.service.controls.PlayerControl;
-import com.company.rpgame.service.controls.controlType.KeyboardPlayerControl;
-import com.company.rpgame.service.controls.controlType.PlayerControlKeys;
+import com.company.rpgame.service.controls.controlAbstract.controlType.KeyboardControl;
+import com.company.rpgame.service.controls.controlAbstract.controlType.PlayerControlKey;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower;
 import com.github.czyzby.autumn.mvc.stereotype.View;
 import com.github.czyzby.autumn.mvc.stereotype.ViewStage;
@@ -52,11 +52,11 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
                     keyboardListener.remove();
                     return false;
                 }
-                final KeyboardPlayerControl keyboardControl = (KeyboardPlayerControl) playerControl;
+                final KeyboardControl keyboardControl = (KeyboardControl) playerControl;
                 for (TextButton key:
-                        keys) {
+                        new Array.ArrayIterable<>(keys)) {
                     if(checkedButton == key){
-                        keyboardControl.setKey(keyboardControl.getKey(keycode), keycode);
+                        keyboardControl.setPlayerKey(keyboardControl.getPlayerKey(keycode), keycode);
                     }
                 }
                 checkedButton.setText(Keys.toString(keycode));
@@ -97,12 +97,12 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
 
     private void setCurrentControls() {
         if (playerControl.getType() == ControlType.KEYBOARD) {
-            final KeyboardPlayerControl keyboardControl = (KeyboardPlayerControl) playerControl;
+            final KeyboardControl keyboardControl = (KeyboardControl) playerControl;
 
-            PlayerControlKeys[] values = PlayerControlKeys.values();
+            PlayerControlKey[] values = PlayerControlKey.values();
             for (int i = 0, valuesLength = values.length; i < valuesLength; i++) {
-                PlayerControlKeys boundKey = values[i];
-                keys.items[i].setText(Keys.toString(keyboardControl.getKey(boundKey)));
+                PlayerControlKey boundKey = values[i];
+                keys.items[i].setText(Keys.toString(keyboardControl.getPlayerKey(boundKey)));
             }
         }
     }

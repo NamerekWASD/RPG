@@ -2,9 +2,11 @@ package com.company.rpgame.service;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,21 +15,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.company.rpgame.exception.NoSpawnPointException;
-import com.company.rpgame.helpers.Box2D.TiledMapUtils;
+import com.company.rpgame.helper.Box2D.TiledMapUtils;
 import com.company.rpgame.service.listeners.WorldListener;
-import com.company.rpgame.service.ui.CameraService;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Inject;
 import net.dermetfan.gdx.physics.box2d.Box2DMapObjectParser;
 
 import java.util.Objects;
 
-import static com.company.rpgame.helpers.Constants.*;
+import static com.company.rpgame.helper.Constants.*;
 
 
 @Component
-public class Box2DService extends Game implements Screen {
+public class Box2DService extends Game {
     private final Box2DMapObjectParser parser = new Box2DMapObjectParser(1/PPM);
+    private final Batch batch = new SpriteBatch();
     @Inject
     private CameraService cameraService;
     private Box2DDebugRenderer bdr;
@@ -39,13 +41,11 @@ public class Box2DService extends Game implements Screen {
     private Status status;
 
 
-
     enum Status{
         RUN,
         PAUSE
     }
 
-    @Override
     public void create() {
         dispose();
 
@@ -57,27 +57,31 @@ public class Box2DService extends Game implements Screen {
 
         map = new TmxMapLoader().load("maps/test/newMap.tmx");
         parser.load(world, map);
+        parser.getFixtures().forEach((fixture) -> fixture.value.setUserData(this));
 
-        tmr = new OrthogonalTiledMapRenderer(map);
+        tmr = new OrthogonalTiledMapRenderer(map, batch);
     }
 
-    @Override
-    public void show() {
 
-    }
-
-    @Override
     public void render(float delta) {
         if(status == Status.RUN){
             Gdx.gl.glClearColor(.25f,.5f,.8f,.9f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             update(delta);
         }else{
-            Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
-            Gdx.gl.glClear(GL20.GL_DEPTH_BUFFER_BIT);
+            Gdx.gl.glClearColor(1f, 1f, 1f, 0.5f);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         }
         tmr.render();
+
         bdr.render(world, cameraService.getProjectionMatrix().scl(PPM));
+        if(Gdx.input.isKeyPressed(Input.Keys.C)){
+            bdr.setDrawBodies(false);
+            bdr.setDrawInactiveBodies(false);
+        }else{
+            bdr.setDrawInactiveBodies(true);
+            bdr.setDrawBodies(true);
+        }
     }
 
     @Override
@@ -93,11 +97,6 @@ public class Box2DService extends Game implements Screen {
     @Override
     public void resume() {
         status = Status.RUN;
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     @Override

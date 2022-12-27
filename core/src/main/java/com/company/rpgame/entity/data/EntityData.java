@@ -1,6 +1,6 @@
 package com.company.rpgame.entity.data;
 
-import com.company.rpgame.helpers.Percentage;
+import com.company.rpgame.helper.Percentage;
 
 public class EntityData {
 

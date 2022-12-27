@@ -5,9 +5,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.company.rpgame.helpers.Box2D.components.Size;
+import com.company.rpgame.helper.Box2D.components.Size;
 
-import static com.company.rpgame.helpers.Constants.PPM;
+import static com.company.rpgame.helper.Constants.PPM;
 
 public class EntityBody {
     protected Body body;

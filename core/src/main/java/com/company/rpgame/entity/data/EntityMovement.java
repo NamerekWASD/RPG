@@ -1,6 +1,6 @@
 package com.company.rpgame.entity.data;
 
-import static com.company.rpgame.helpers.Constants.PPM;
+import static com.company.rpgame.helper.Constants.PPM;
 
 public class EntityMovement {
     private final float speed = .25f*PPM;
@@ -55,7 +55,6 @@ public class EntityMovement {
         if(moveSpeed <= 3f && moveSpeed >= -3f){
             moveSpeed = 0;
         }
-        System.out.println(moveSpeed);
     }
 
 }

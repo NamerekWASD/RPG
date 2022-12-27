@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.company.rpgame.Application;
-import com.company.rpgame.helpers.Constants;
+import com.company.rpgame.helper.Constants;
 import com.company.rpgame.service.ApplicationService;
 import com.github.czyzby.autumn.annotation.Component;
 import com.github.czyzby.autumn.annotation.Initiate;
@@ -32,7 +32,7 @@ public class Configuration implements ActionContainer {
 	/** Path to the internationalization bundle. */
 	@I18nBundle private final String bundlePath = "i18n/bundle";
 
-	@Skin private final String skinPath = "ui/atlas/main/uiskin.json";
+	@Skin() private final String skinPath = "ui/atlas/main/uiskin.json";
 
 	@LmlParserSyntax private final LmlSyntax syntax = new DefaultLmlSyntax();
 
@@ -69,7 +69,7 @@ public class Configuration implements ActionContainer {
 			FileHandle assetsPath = Gdx.files.internal(directory);
 			loadAssets(assetService, assetsPath);
 		}
-
+		skinService.addSkin("main", new com.badlogic.gdx.scenes.scene2d.ui.Skin(Gdx.files.internal(skinPath)));
 	}
 	private void loadAssets(AssetService manager, FileHandle assetsPath) {
 		for (val file :

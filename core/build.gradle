@@ -26,7 +26,9 @@ dependencies {
 	api "de.golfgl.gdxcontrollerutils:gdx-controllerutils-mapping:$controllerMappingVersion"
 	api "de.golfgl.gdxcontrollerutils:gdx-controllerutils-scene2d:$controllerScene2DVersion"
 	api "de.tomgrill.gdxdialogs:gdx-dialogs-core:$dialogsVersion"
+	//noinspection AnnotationProcessorOnCompilePath
 	api "org.projectlombok:lombok:$lombokVersion"
     api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    implementation 'org.jetbrains:annotations:23.0.0'
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }

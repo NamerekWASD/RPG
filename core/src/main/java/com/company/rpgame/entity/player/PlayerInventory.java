@@ -7,10 +7,10 @@ import com.company.rpgame.entity.items.armor.Head;
 import com.company.rpgame.entity.items.basic.Armor;
 import com.company.rpgame.entity.items.weapon.melee.Sword;
 import com.company.rpgame.entity.items.basic.Item;
-import com.company.rpgame.helpers.AssetsUtil;
-import com.company.rpgame.service.ui.UIService;
+import com.company.rpgame.helper.AssetsUtil;
+import com.company.rpgame.service.UIService;
 
-import static com.company.rpgame.helpers.Constants.IMAGES_DIRECTORY;
+import static com.company.rpgame.helper.Constants.IMAGES_DIRECTORY;
 
 
 public class PlayerInventory {

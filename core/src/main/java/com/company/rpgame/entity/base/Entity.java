@@ -6,24 +6,23 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.company.rpgame.entity.data.EntityData;
 import com.company.rpgame.entity.data.EntityMovement;
-import com.company.rpgame.helpers.Box2D.BodyBuilder;
-import com.company.rpgame.helpers.Box2D.components.Size;
+import com.company.rpgame.helper.Box2D.BodyBuilder;
+import com.company.rpgame.helper.Box2D.components.Size;
 
-import static com.company.rpgame.helpers.Constants.PPM;
+import static com.company.rpgame.helper.Constants.PPM;
 
 public abstract class Entity implements Disposable {
-
-    private final EntityState entityState = new EntityState();
     private Body body;
     private Size bodySize;
     protected EntityMovement movement;
     protected EntityData data;
     public Entity(){}
 
-    protected void createBody(World world, Vector2 position, Size size,
+    protected Body createBody(World world, Vector2 position, Size size,
                               boolean isStatic, boolean isFixedRotation){
         body = BodyBuilder.createBody(world, position, size, isStatic, isFixedRotation);
         bodySize = size;
+        return body;
     }
     protected Size getBodySize(){
         return bodySize;

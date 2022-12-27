@@ -2,14 +2,15 @@ package com.company.rpgame.entity.components.base;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
-import com.company.rpgame.helpers.AssetsUtil;
-import com.company.rpgame.helpers.Box2D.components.Size;
-import com.company.rpgame.helpers.JsonUtil;
+import com.company.rpgame.helper.AssetsUtil;
+import com.company.rpgame.helper.Box2D.components.Size;
+import com.company.rpgame.helper.JsonUtil;
 
-import static com.company.rpgame.helpers.Constants.ANIMATIONS_DIRECTORY;
-import static com.company.rpgame.helpers.Constants.TEXTURE_SIZE;
+import static com.company.rpgame.helper.Constants.ANIMATIONS_DIRECTORY;
+import static com.company.rpgame.helper.Constants.TEXTURE_SIZE;
 
 public abstract class Animator implements Disposable {
     private static final String SHEET = "sheet";
@@ -20,7 +21,9 @@ public abstract class Animator implements Disposable {
     private int frameColumns;
     private int frameRows;
     protected float stateTime;
-
+    public Animator(String animationName){
+        this(animationName, animationName);
+    }
     public Animator(String textureName, String sheetDataName){
         sheet = AssetsUtil.getTexture(ANIMATIONS_DIRECTORY, textureName);
         frameSize = JsonUtil.readSize(sheetDataName + SHEET, TEXTURE_SIZE);
@@ -48,8 +51,8 @@ public abstract class Animator implements Disposable {
         stateTime = 0f;
     }
 
-    public abstract void act(final float delta);
-    public abstract void draw();
+    public abstract void update(final float delta);
+    public abstract void render(final Batch batch);
 
     public void dispose() {
         sheet.dispose();

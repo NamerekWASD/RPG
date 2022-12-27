@@ -1,10 +1,20 @@
 <?xml version="1.0"?>
-<!DOCTYPE table SYSTEM "dtd\lml.dtd">
-
-<table onecolumn="true" defaultpad="6" tablealign="bottomRight" fillparent="true" defaultfillx="true">
-	<textbutton onchange="startGame">@play</textbutton>
-	<!-- "show:settings" will automatically show the settings.lml dialog when button is clicked. -->
-	<textbutton onchange="goto:settings">@settings</textbutton>
-	<!-- "app:exit" will automatically try to exit the application when the button is clicked. -->
-	<textbutton onchange="app:exit">@exit</textbutton>
-</table>
+<!DOCTYPE stack SYSTEM "dtd\lml.dtd">
+<stack fillparent="true">
+	<table id="buttonTable" onecolumn="true"
+		   tablealign="bottomRight" defaultalign="bottomRight"
+		   defaultfillx="true" defaultpad="8">
+		<textbutton onchange="startGame"  fillx="true">@play</textbutton>
+		<textbutton onchange="goto:settings" fillx="true">@settings</textbutton>
+		<textbutton id="exit" fillx="true">@exit</textbutton>
+	</table>
+	<:clicklistener ids="exit">
+		<dialog defaultgrowx="true" onecolumn="true">
+			<label>@sure?</label>
+			<buttongroup defaultpad="16" defaultminwidth="150" defaultmaxwidth="250" defaultprefwidth="200">
+				<textbutton onchange="close" text="@no"/>
+				<textbutton onchange="app:exit" text="@yes"/>
+			</buttongroup>
+		</dialog>
+	</:clicklistener>
+</stack>

@@ -1,35 +1,31 @@
 package com.company.rpgame.entity.components;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.company.rpgame.entity.components.base.Animator;
-import com.company.rpgame.helpers.Box2D.PositionFixer;
-import com.company.rpgame.helpers.Box2D.components.Size;
+import com.company.rpgame.helper.Box2D.PositionFixer;
+import com.company.rpgame.helper.Box2D.components.Size;
 
 public class EntityAnimator extends Animator {
 
     private Vector2 bodyCenter;
     private boolean isReversed = false;
-    protected SpriteBatch batch;
     private Vector2 currentPosition;
 
-    public EntityAnimator(SpriteBatch batch,
-                          String textureName,
+    public EntityAnimator(String textureName,
                           String SheetDataName,
                           Size bodySize) {
         super(textureName, SheetDataName);
-        this.batch = batch;
         findCenter(bodySize);
     }
-
     @Override
-    public void act(final float delta) {
+    public void update(final float delta) {
         stateTime += delta;
     }
 
     @Override
-    public void draw(){
+    public void render(final Batch batch){
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
 
         batch.begin();

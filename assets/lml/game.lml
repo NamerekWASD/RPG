@@ -4,9 +4,8 @@
 <table fillparent="true" tablealign="topRight">
     <verticalgroup>
         <table defaultsize="50" onecolumn="true" defaultpad="10" background="topRightFrame">
-            <imagebutton image="set" onchange="settings"/>
-            <imagebutton image="play-btn" onchange="toggleWorldState"/>
-            <imagebutton image="inventory" onchange="inventory"/>
+            <imagebutton image="set" onchange="gotoSettings"/>
+            <imagebutton id="inventoryButton" image="inventory" onchange="gotoInventory"/>
         </table>
     </verticalgroup>
 </table>
