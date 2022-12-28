@@ -29,6 +29,7 @@ dependencies {
 	//noinspection AnnotationProcessorOnCompilePath
 	api "org.projectlombok:lombok:$lombokVersion"
     api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+	implementation 'com.github.raeleus.TenPatch:tenpatch:5.2.3'
     implementation 'org.jetbrains:annotations:23.0.0'
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }

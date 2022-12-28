@@ -78,7 +78,10 @@
 	"default": {
 		"up": "round-gray",
 		"down": "round-dark-gray",
-		"over": "round-light-gray"
+		"over": "round-light-gray",
+		"focused": "round-light-gray",
+		"disabled": "round-dark-gray",
+		"pressedOffsetX": 1
 	},
 	"toggle": {
 		"up": "round-gray",
@@ -86,6 +89,11 @@
 		"over": "round-light-gray",
 		"checked": "round-dark-gray",
 		"checkedOver": "round-light-gray"
+	},
+	"brandNew": {
+		"up": "buttonRed-up",
+		"down": "buttonRed-down",
+		"over": "buttonRed-over."
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
@@ -245,8 +253,8 @@
 "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
 	"default": {
 		"background": "window",
-		"titleFont": "font",
-		"titleFontColor": "black"
+		"titleFont": "title",
+		"titleFontColor": "white"
 	},
 	"dialog": {
 		"background": "window",

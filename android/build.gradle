@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 
 android {
 	sourceSets {
+		compileSdkVersion = 30
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
 			java.srcDirs = ['src/main/java']
@@ -20,7 +21,7 @@ android {
         }
     }
     defaultConfig {
-		applicationId 'com.company.rpgame'
+		applicationId = 'com.company.rpgame'
         minSdk 24
         targetSdkVersion 33
 		versionCode 1
@@ -57,7 +58,7 @@ dependencies {
 	implementation "de.tomgrill.gdxdialogs:gdx-dialogs-android:$dialogsVersion"
 	implementation project(':core')
 	//noinspection GradleDependency
-	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs_configuration:1.1.0'
+	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 	implementation 'com.crashinvaders.lml:gdx-autumn-android:1.10.1.11.0'
 	implementation "com.crashinvaders.lml:gdx-autumn-mvc:1.10.1.11.0"
 	implementation "com.crashinvaders.lml:gdx-autumn:1.10.1.11.0"
@@ -118,7 +119,7 @@ tasks.configureEach { packageTask ->
   }
 }
 
-tasks.register('run') {
+task execute(type: Exec){
 	def path
 	def localProperties = project.file("../local.properties")
 	if (localProperties.exists()) {
@@ -137,7 +138,6 @@ tasks.register('run') {
 	}
 
 	def adb = path + "/platform-tools/adb"
-	commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.company.rpgame/com.company.rpgame.android.AndroidLauncher'
+	commandLine("$adb", 'shell', 'am', 'start', '-n', 'com.company.rpgame/com.company.rpgame.android.AndroidLauncher')
 }
-
 eclipse.project.name = appName + "-android"

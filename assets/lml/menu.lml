@@ -4,17 +4,8 @@
 	<table id="buttonTable" onecolumn="true"
 		   tablealign="bottomRight" defaultalign="bottomRight"
 		   defaultfillx="true" defaultpad="8">
-		<textbutton onchange="startGame"  fillx="true">@play</textbutton>
-		<textbutton onchange="goto:settings" fillx="true">@settings</textbutton>
-		<textbutton id="exit" fillx="true">@exit</textbutton>
+		<textbutton onchange="startGame">@play</textbutton>
+		<textbutton onchange="goto:settings">@settings</textbutton>
+		<textbutton onchange="showSureDialog">@exit</textbutton>
 	</table>
-	<:clicklistener ids="exit">
-		<dialog defaultgrowx="true" onecolumn="true">
-			<label>@sure?</label>
-			<buttongroup defaultpad="16" defaultminwidth="150" defaultmaxwidth="250" defaultprefwidth="200">
-				<textbutton onchange="close" text="@no"/>
-				<textbutton onchange="app:exit" text="@yes"/>
-			</buttongroup>
-		</dialog>
-	</:clicklistener>
 </stack>

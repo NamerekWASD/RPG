@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE dialog SYSTEM "dtd\lml.dtd">
+
+<dialog id="sureDialog" title="@sure?" titlealign="center">
+    <table defaultpad="16" defaultminwidth="150"
+    defaultmaxwidth="250" defaultprefwidth="200" fillparent="true">
+        <textbutton onchange="closeDialog" text="@no"/>
+        <textbutton onchange="app:exit" text="@yes"/>
+    </table>
+</dialog>

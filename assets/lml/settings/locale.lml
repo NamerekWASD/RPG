@@ -2,7 +2,7 @@
 <!DOCTYPE table SYSTEM "dtd\lml.dtd">
 
 
-<table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="frame" style="dialog">
+<table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="cframe-m" style="dialog">
     <:each locale="{locales}">
         <:if test="{locale} != {currentLocale}">
             <textbutton onchange="locale:{locale}">@{locale}</textbutton>

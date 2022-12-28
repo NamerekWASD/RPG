@@ -38,6 +38,7 @@ public abstract class AbstractButtonControl extends AbstractControl {
 
     protected void updateListeners(){
         ViewControlListener currentView = getCurrentView();
+        System.out.println(currentView);
 
         if(isPressed(InvokeInventory)){
             ViewControlListener inventoryView = getListener(InventoryViewControllerControl.class);

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE table SYSTEM "dtd\lml.dtd">
 
-<table id="dialog" defaultspace="15" tablealign="center" fillparent="true" onecolumn="true" background="frame" style="dialog">
+<table id="dialog" defaultspace="15" tablealign="center" fillparent="true" onecolumn="true" background="cframe-m" style="dialog">
     <splitpane>
         <table onecolumn="true" padright="15" defaultpad="5">
             <label>@musicVolume</label>

@@ -5,10 +5,9 @@ import com.badlogic.gdx.utils.Array;
 import com.company.rpgame.entity.items.armor.Chest;
 import com.company.rpgame.entity.items.armor.Head;
 import com.company.rpgame.entity.items.basic.Armor;
-import com.company.rpgame.entity.items.weapon.melee.Sword;
 import com.company.rpgame.entity.items.basic.Item;
+import com.company.rpgame.entity.items.weapon.melee.Sword;
 import com.company.rpgame.helper.AssetsUtil;
-import com.company.rpgame.service.UIService;
 
 import static com.company.rpgame.helper.Constants.IMAGES_DIRECTORY;
 
@@ -20,12 +19,12 @@ public class PlayerInventory {
     public PlayerInventory(){
         inventoryItems = new Array<>(capacity);
         equippedItems = new Array<>();
-        Image image = new Image(UIService.getSkin(), "knife");
+        Image image = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "knife"));
         Sword sword = new Sword(10.0, 50.0, 10.0);
         sword.setImage(image);
         sword.setDescription("some sword");
 
-        Image newImage = new Image(UIService.getSkin(), "set");
+        Image newImage = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "knife"));
         Sword newSword = new Sword(10.0, 50.0, 10.0);
         newSword.setImage(newImage);
         newSword.setDescription("another one");

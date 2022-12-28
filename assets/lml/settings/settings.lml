@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE table SYSTEM "dtd\lml.dtd">
 
-<table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="frame" align="center" >
+<table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="cframe-m" align="center" >
 	<label textalign="center">@settings</label>
 	<textbutton onchange="goto:volume">@volumeMaster</textbutton>
 	<textbutton onchange="goto:locale">@locale</textbutton>
