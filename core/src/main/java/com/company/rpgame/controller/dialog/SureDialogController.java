@@ -1,7 +1,7 @@
 package com.company.rpgame.controller.dialog;
 
 import com.company.rpgame.controller.MenuController;
-import com.company.rpgame.service.ViewActionsService;
+import com.company.rpgame.service.ViewService;
 import com.company.rpgame.service.listeners.ViewControlListener;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
@@ -15,7 +15,7 @@ public class SureDialogController implements ActionContainer, ViewControlListene
     @Inject private MenuController menuController;
     @Inject private InterfaceService interfaceService;
 
-    @Inject private ViewActionsService viewActionsService;
+    @Inject private ViewService viewService;
     @Override
     public Class<?> getViewClass() {
         return this.getClass();
@@ -33,6 +33,6 @@ public class SureDialogController implements ActionContainer, ViewControlListene
     @LmlAction
     private void closeDialog(){
         interfaceService.destroyDialog(this.getClass());
-        viewActionsService.setCurrentListener(menuController);
+        viewService.setCurrentListener(menuController);
     }
 }

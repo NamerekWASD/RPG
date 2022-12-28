@@ -28,7 +28,7 @@ public class GameController extends StandardViewShower implements DefaultViewCon
     @Inject private PlayerService player;
     @Inject private InventoryService inventoryService;
     @Inject private ScreenService screenService;
-    @Inject private ViewActionsService actionsService;
+    @Inject private ViewService actionsService;
     @Inject private InventoryViewControllerControl inventoryDialogController;
     @Inject private SettingsDialogController settingsDialogController;
     @ViewStage

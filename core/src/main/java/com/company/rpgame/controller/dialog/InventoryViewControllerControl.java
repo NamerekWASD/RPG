@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.company.rpgame.controller.GameController;
 import com.company.rpgame.service.InventoryService;
 import com.company.rpgame.service.ScreenService;
-import com.company.rpgame.service.ViewActionsService;
+import com.company.rpgame.service.ViewService;
 import com.company.rpgame.service.listeners.ViewControlListener;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
@@ -28,7 +28,7 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
     @Inject
     private ScreenService screenService;
     @Inject
-    private ViewActionsService viewActionsService;
+    private ViewService viewService;
     @LmlActor("inventoryDialog")
     private static Window dialog;
 
@@ -70,6 +70,6 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
 
     @Override
     public void doBeforeShow(Window dialog) {
-        viewActionsService.setCurrentListener(this);
+        viewService.setCurrentListener(this);
     }
 }

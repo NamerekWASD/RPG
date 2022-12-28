@@ -51,7 +51,7 @@ public class ScreenService implements Disposable {
         }
     }
 
-    public <T> void resumeGame(@Null Class<T> tClass) {
+    public void resumeGame(@Null Class<?> tClass) {
         world.resume();
         if(tClass == null){
             return;

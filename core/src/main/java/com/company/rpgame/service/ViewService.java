@@ -11,7 +11,7 @@ import com.github.czyzby.autumn.annotation.Inject;
 import lombok.val;
 
 @Component
-public class ViewActionsService implements Disposable {
+public class ViewService implements Disposable {
     private final Array<ScheduleAction> scheduleActions = new Array<>();
     @Inject
     private ControlService controlService;

@@ -11,7 +11,7 @@ import com.company.rpgame.action.base.SequenceSchedule;
 import com.company.rpgame.actor.AnimationActor;
 import com.company.rpgame.actor.components.AnimationTexture;
 import com.company.rpgame.controller.dialog.SureDialogController;
-import com.company.rpgame.service.ViewActionsService;
+import com.company.rpgame.service.ViewService;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
 import com.github.czyzby.autumn.mvc.stereotype.View;
@@ -28,7 +28,7 @@ import lombok.val;
 	@Inject
 	private InterfaceService interfaceService;
 	@Inject
-	private ViewActionsService viewActionsService;
+	private ViewService viewService;
 	@LmlActor
 	private Table buttonTable;
 	@Inject
@@ -50,7 +50,7 @@ import lombok.val;
 			initialized = true;
 			initMainBackground();
 		}
-		viewActionsService.render(delta);
+		viewService.render(delta);
 		stage.act(delta);
 		stage.draw();
 	}
@@ -60,7 +60,7 @@ import lombok.val;
 		stage.getRoot().addActor(background);
 		background.clearActions();
 		background.toBack();
-		viewActionsService.scheduleAction(new SequenceSchedule(background,
+		viewService.scheduleAction(new SequenceSchedule(background,
 				Actions.sequence(Actions.alpha(0f),
 						Actions.sizeTo(stage.getWidth(), stage.getHeight()),
 						Actions.fadeIn(0.2f, Interpolation.slowFast))));
@@ -72,26 +72,26 @@ import lombok.val;
 		int duration = 0;
 		Actor buttonTableParent = buttonTable.getParent();
 
-		viewActionsService.scheduleAction(new BaseSchedule(buttonTableParent, Actions.moveBy(0, -amount)));
+		viewService.scheduleAction(new BaseSchedule(buttonTableParent, Actions.moveBy(0, -amount)));
 		for (val button :
 				new Array.ArrayIterator<>(buttonTable.getChildren())) {
-			viewActionsService.scheduleAction(new SequenceSchedule
+			viewService.scheduleAction(new SequenceSchedule
 					(button, Actions.sequence(Actions.delay((float)duration++/5),
 					Actions.moveBy(0, amount, 1, Interpolation.fastSlow))));
 		}
 
 		for (val button :
 				new Array.ArrayIterator<>(buttonTable.getChildren())) {
-			viewActionsService.scheduleAction(new SequenceSchedule(button, Actions.sequence(Actions.delay(duration),Actions.moveBy(0, -amount))));
+			viewService.scheduleAction(new SequenceSchedule(button, Actions.sequence(Actions.delay(duration),Actions.moveBy(0, -amount))));
 		}
 
-		viewActionsService.scheduleAction(new SequenceSchedule(buttonTableParent,
+		viewService.scheduleAction(new SequenceSchedule(buttonTableParent,
 				Actions.sequence(Actions.delay(duration), Actions.moveBy(0, amount))));
 
-		viewActionsService.initiate();
-		viewActionsService.attachListener(stage);
-		viewActionsService.addListeners(this, sureDialog);
-		viewActionsService.setCurrentListener(this);
+		viewService.initiate();
+		viewService.attachListener(stage);
+		viewService.addListeners(this, sureDialog);
+		viewService.setCurrentListener(this);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ import lombok.val;
 	@Override
 	public void invoke() {
 		interfaceService.show(this.getClass());
-		viewActionsService.setCurrentListener(this);
+		viewService.setCurrentListener(this);
 	}
 
 	@Override
@@ -113,6 +113,6 @@ import lombok.val;
 	@LmlAction
 	public void showSureDialog() {
 		interfaceService.showDialog(sureDialog.getClass());
-		viewActionsService.setCurrentListener(sureDialog);
+		viewService.setCurrentListener(sureDialog);
 	}
 }
