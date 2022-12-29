@@ -1,16 +1,16 @@
 package com.company.rpgame.controller;
 
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
-import com.company.rpgame.action.base.BaseSchedule;
 import com.company.rpgame.action.base.SequenceSchedule;
 import com.company.rpgame.actor.AnimationActor;
 import com.company.rpgame.actor.components.AnimationTexture;
 import com.company.rpgame.controller.dialog.SureDialogController;
+import com.company.rpgame.service.ActionService;
 import com.company.rpgame.service.ViewService;
 import com.github.czyzby.autumn.annotation.Inject;
 import com.github.czyzby.autumn.mvc.component.ui.InterfaceService;
@@ -29,14 +29,19 @@ import lombok.val;
 	private InterfaceService interfaceService;
 	@Inject
 	private ViewService viewService;
+	@Inject
+	private ActionService actionService;
 	@LmlActor
-	private Table buttonTable;
+	private TextButton start;
+	@LmlActor
+	private TextButton exit;
+	@LmlActor
+	private TextButton settings;
 	@Inject
 	private SureDialogController sureDialog;
 	@ViewStage
 	private Stage stage;
 	private boolean initialized;
-
 
 	@LmlAction
 	public void startGame() {
@@ -45,14 +50,15 @@ import lombok.val;
 
 	@Override
 	public void render(final Stage stage, final float delta) {
+		stage.act(delta);
+		stage.draw();
 		if(!initialized){
+			stage.setDebugAll(true);
 			initialize();
 			initialized = true;
 			initMainBackground();
 		}
-		viewService.render(delta);
-		stage.act(delta);
-		stage.draw();
+		actionService.render();
 	}
 
 	private void initMainBackground() {
@@ -60,33 +66,19 @@ import lombok.val;
 		stage.getRoot().addActor(background);
 		background.clearActions();
 		background.toBack();
-		viewService.scheduleAction(new SequenceSchedule(background,
-				Actions.sequence(Actions.alpha(0f),
-						Actions.sizeTo(stage.getWidth(), stage.getHeight()),
-						Actions.fadeIn(0.2f, Interpolation.slowFast))));
+		actionService.scheduleAction(new SequenceSchedule(background,
+				Actions.sequence(Actions.sizeTo(stage.getWidth(), stage.getHeight()),
+						Actions.fadeIn(1f, Interpolation.circleIn))));
 	}
 
 	private void initialize() {
-
-		int amount = 200;
-		int duration = 0;
-		Actor buttonTableParent = buttonTable.getParent();
-
-		viewService.scheduleAction(new BaseSchedule(buttonTableParent, Actions.moveBy(0, -amount)));
+		Array<Button> buttons = new Array<>();
+		buttons.add(start, settings, exit);
+		start.clip(false);
 		for (val button :
-				new Array.ArrayIterator<>(buttonTable.getChildren())) {
-			viewService.scheduleAction(new SequenceSchedule
-					(button, Actions.sequence(Actions.delay((float)duration++/5),
-					Actions.moveBy(0, amount, 1, Interpolation.fastSlow))));
+				new Array.ArrayIterator<>(buttons)) {
+			actionService.appearFromRight(button);
 		}
-
-		for (val button :
-				new Array.ArrayIterator<>(buttonTable.getChildren())) {
-			viewService.scheduleAction(new SequenceSchedule(button, Actions.sequence(Actions.delay(duration),Actions.moveBy(0, -amount))));
-		}
-
-		viewService.scheduleAction(new SequenceSchedule(buttonTableParent,
-				Actions.sequence(Actions.delay(duration), Actions.moveBy(0, amount))));
 
 		viewService.initiate();
 		viewService.attachListener(stage);

@@ -2,18 +2,16 @@ package com.company.rpgame.action.base;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
-import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Null;
 import com.company.rpgame.action.ScheduleAction;
 
-public class BaseSchedule implements ScheduleAction, Disposable {
+public class BaseSchedule implements ScheduleAction {
     private final Actor targetActor;
     protected final Action action;
     private boolean isInstant;
-    private boolean complete = false;
 
-    public BaseSchedule(Actor targetActor, Action action) {
+    public BaseSchedule(@Null Actor targetActor, Action action) {
         this.targetActor = targetActor;
         this.action = action;
         checkTemporal(action);
@@ -22,16 +20,14 @@ public class BaseSchedule implements ScheduleAction, Disposable {
         if(!(action instanceof TemporalAction)){
             return;
         }
-        if(((TemporalAction) action).getDuration() == 0){
-            isInstant = true;
-        }
+        isInstant = ((TemporalAction) action).getDuration() == 0;
     }
 
     @Override
-    public Action begin(float delta) {
+    public Action begin() {
         targetActor.addAction(action);
         if(isInstant){
-            targetActor.act(delta);
+            targetActor.act(0);
             end();
         }
         return action;
@@ -45,8 +41,7 @@ public class BaseSchedule implements ScheduleAction, Disposable {
 
     @Override
     public boolean isActing() {
-        complete = !targetActor.getActions().contains(action, false);
-        return !complete;
+        return targetActor.getActions().contains(action, false);
     }
 
     @Override
@@ -54,13 +49,18 @@ public class BaseSchedule implements ScheduleAction, Disposable {
         return action;
     }
 
-    @Override
-    public void dispose() {
-        Actions.removeAction(action);
-    }
 
     @Override
     public boolean isComplete() {
-        return complete;
+        return !isActing();
+    }
+
+    @Override
+    public float getActionLastTime() {
+        if(action instanceof TemporalAction){
+            TemporalAction temporalAction = (TemporalAction) action;
+            return temporalAction.getDuration() - temporalAction.getTime();
+        }
+        return 0;
     }
 }

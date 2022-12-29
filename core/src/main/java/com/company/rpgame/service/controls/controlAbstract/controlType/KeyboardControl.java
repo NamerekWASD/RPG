@@ -1,11 +1,10 @@
 package com.company.rpgame.service.controls.controlAbstract.controlType;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.IntSet;
 import com.company.rpgame.service.controls.controlAbstract.AbstractButtonControl;
 import com.company.rpgame.service.controls.controlAbstract.ControlType;
 
@@ -14,59 +13,62 @@ import static com.company.rpgame.service.controls.controlAbstract.controlType.Sc
 import static com.company.rpgame.service.controls.controlAbstract.controlType.ScreenControlKey.InvokeInventory;
 
 public class KeyboardControl extends AbstractButtonControl {
+    private static final int initialCapacity = 2;
+
     public KeyboardControl() {
         // Initial settings:
-        setPlayerKey(UP, Input.Keys.W);
-        setPlayerKey(DOWN, Input.Keys.S);
-        setPlayerKey(LEFT, Input.Keys.A);
-        setPlayerKey(RIGHT, Input.Keys.D);
-        setPlayerKey(JUMP, Input.Keys.SPACE);
+        setPlayerKey(UP, initiateKey(Input.Keys.W));
+        setPlayerKey(DOWN, initiateKey(Input.Keys.S));
+        setPlayerKey(LEFT, initiateKey(Input.Keys.A));
+        setPlayerKey(RIGHT, initiateKey(Input.Keys.D));
+        setPlayerKey(JUMP, initiateKey(Input.Keys.SPACE));
 
-        setScreenKeys(InvokeInventory, Input.Keys.TAB);
-        setScreenKeys(Back, Input.Keys.ESCAPE);
+        setScreenKeys(InvokeInventory, initiateKey(Input.Keys.TAB, Input.Keys.E));
+        setScreenKeys(Back, initiateKey(Input.Keys.ESCAPE));
 }
+
+    private IntSet initiateKey(int... keys) {
+        IntSet set = new IntSet(initialCapacity);
+        for (int key :
+                keys) {
+            set.add(key);
+        }
+        return set;
+    }
+
     @Override
     public void attachInputListener(final Stage stage) {
         stage.addListener(new InputListener() {
+
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if(!pressedButtons.add(keycode)){
+                    return false;
+                }
+                if(getListeners().size != 0){
+                    if(updateViews()){
+                        resetScreenKeys();
+                        return true;
+                    }
+                }
+                if(getListener() != null){
+                    updateMovement();
+                    return true;
+                }
+                return false;
+            }
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
-                if (screenKeys.containsValue(keycode, true)) {
-                    pressedButtons.add(keycode);
-                    updateListeners();
-                    pressedButtons.remove(keycode);
-                    return true;
+                if(!pressedButtons.remove(keycode)){
+                    return false;
                 }
-                return false;
+                System.out.println("out");
+                updateMovement();
+                return true;
             }
         });
     }
 
-    @Override
-    public void attachInputListener(final InputMultiplexer inputMultiplexer) {
-
-        inputMultiplexer.addProcessor(new InputAdapter() {
-
-            @Override
-            public boolean keyDown(final int keycode) {
-                if (playerKeys.containsValue(keycode, true)) {
-                    pressedButtons.add(keycode);
-                    updateMovement();
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean keyUp(final int keycode) {
-                if (pressedButtons.contains(keycode)) {
-                    System.out.println(pressedButtons.remove(keycode));
-                    updateMovement();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 
     @Override
     public ControlType getType() {

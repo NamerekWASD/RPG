@@ -16,7 +16,7 @@ import com.github.czyzby.autumn.mvc.stereotype.ViewDialog;
 import java.util.Objects;
 
 @Component
-public class ScreenService implements Disposable {
+public class GameScreenService implements Disposable {
     @Inject
     private PlayerService player;
     @Inject private InterfaceService interfaceService;
@@ -68,7 +68,7 @@ public class ScreenService implements Disposable {
 
 
     @Override
-    public void dispose(){
+    public void dispose() {
         playerHealthBar.dispose();
     }
 }

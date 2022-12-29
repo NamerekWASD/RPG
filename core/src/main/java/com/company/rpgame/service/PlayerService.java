@@ -1,6 +1,5 @@
 package com.company.rpgame.service;
 
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -25,9 +24,6 @@ public class PlayerService implements Disposable {
     private Box2DService worldService;
     private Player player;
 
-    public void initiateControls(final InputMultiplexer inputMultiplexer){
-        player.getControl().attachInputListener(inputMultiplexer);
-    }
     public void initiate() throws NoSpawnPointException {
         player = new Player(controlService.getPlayerControl(), worldService.getWorld(),
                 worldService.getWorldSpawnPoint(), cameraService.getViewport());

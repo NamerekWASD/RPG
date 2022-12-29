@@ -3,7 +3,6 @@ package com.company.rpgame.controller.dialog;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -14,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.company.rpgame.service.controls.controlAbstract.ControlType;
 import com.company.rpgame.service.controls.PlayerControl;
+import com.company.rpgame.service.controls.ScreenControl;
+import com.company.rpgame.service.controls.controlAbstract.ControlType;
 import com.company.rpgame.service.controls.controlAbstract.controlType.KeyboardControl;
 import com.company.rpgame.service.controls.controlAbstract.controlType.PlayerControlKey;
 import com.github.czyzby.autumn.mvc.component.ui.controller.ViewDialogShower;
@@ -26,12 +27,16 @@ import com.github.czyzby.kiwi.util.gdx.scene2d.range.FloatRange;
 import com.github.czyzby.lml.annotation.LmlAction;
 import com.github.czyzby.lml.annotation.LmlActor;
 import com.github.czyzby.lml.parser.action.ActionContainer;
+import lombok.val;
+
+import static com.company.rpgame.helper.ArrayUtils.getItems;
 
 /** Allows to edit chosen controls. */
 @View(id = "edit", value = "lml/edit.lml")
 public class ControlsEditController implements ActionContainer, ViewDialogShower {
     @ViewStage private Stage stage;
     private PlayerControl playerControl;
+    private ScreenControl screenControl;
 
     @LmlActor("mock") private Image mockUpEntity;
     @LmlActor("mainTable") private Table mainTable;
@@ -45,7 +50,21 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
 
     public ControlsEditController() {
         // Allows to change current keyboard controls:
+        IntSet storedKeys = new IntSet(2);
         keyboardListener.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                storedKeys.add(keycode);
+                if(storedKeys.size != 0){
+                    checkedButton.setText(checkedButton.getText() + " + ");
+                }
+                checkedButton.setText(checkedButton.getText() + Keys.toString(keycode));
+                if(storedKeys.size == 3){
+                   return keyUp(event, keycode);
+                }
+                return true;
+            }
+
             @Override
             public boolean keyUp(final InputEvent event, final int keycode) {
                 if (checkedButton == null) {
@@ -56,16 +75,17 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
                 for (TextButton key:
                         new Array.ArrayIterable<>(keys)) {
                     if(checkedButton == key){
-                        keyboardControl.setPlayerKey(keyboardControl.getPlayerKey(keycode), keycode);
+                        keyboardControl.setPlayerKey(keyboardControl.getPlayerKey(storedKeys), storedKeys);
                     }
                 }
-                checkedButton.setText(Keys.toString(keycode));
                 checkedButton.setChecked(false);
                 checkedButton = null;
                 keyboardListener.remove();
                 return false;
             }
+
         });
+
     }
 
     /** @param playerControl will be edited by this screen. */
@@ -85,14 +105,12 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
 
     private void attachListeners() {
         // Allowing controls to listen to input:
-        final InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        playerControl.attachInputListener(inputMultiplexer);
+        playerControl.attachInputListener(stage);
 
         mockUpEntity.addAction(Actions.sequence(Actions.fadeOut(0.1f),
                 Actions.fadeIn(0.1f)));
 
-        inputMultiplexer.addProcessor(stage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(stage);
     }
 
     private void setCurrentControls() {
@@ -102,7 +120,10 @@ public class ControlsEditController implements ActionContainer, ViewDialogShower
             PlayerControlKey[] values = PlayerControlKey.values();
             for (int i = 0, valuesLength = values.length; i < valuesLength; i++) {
                 PlayerControlKey boundKey = values[i];
-                keys.items[i].setText(Keys.toString(keyboardControl.getPlayerKey(boundKey)));
+                for (val comboKey :
+                        getItems(keyboardControl.getPlayerKey(boundKey))) {
+                    keys.items[i].setText(Keys.toString(comboKey));
+                }
             }
         }
     }

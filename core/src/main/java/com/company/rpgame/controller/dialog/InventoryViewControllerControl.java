@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.company.rpgame.controller.GameController;
 import com.company.rpgame.service.InventoryService;
-import com.company.rpgame.service.ScreenService;
+import com.company.rpgame.service.GameScreenService;
 import com.company.rpgame.service.ViewService;
 import com.company.rpgame.service.listeners.ViewControlListener;
 import com.github.czyzby.autumn.annotation.Inject;
@@ -26,7 +26,7 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
     @Inject
     private InventoryService inventory;
     @Inject
-    private ScreenService screenService;
+    private GameScreenService gameScreenService;
     @Inject
     private ViewService viewService;
     @LmlActor("inventoryDialog")
@@ -35,7 +35,7 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
 
     @LmlAction("continue")
     public void returnToGame(){
-        screenService.resumeGame(this.getClass());
+        gameScreenService.resumeGame(this.getClass());
         dialog.clearActions();
         addAction(dialog);
         inventory.destroy();

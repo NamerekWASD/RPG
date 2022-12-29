@@ -9,10 +9,8 @@ import com.company.rpgame.service.listeners.PlayerControlListener;
 import com.company.rpgame.service.listeners.ViewControlListener;
 import lombok.val;
 
-import java.util.NoSuchElementException;
-
 public abstract class AbstractControl implements PlayerControl, ScreenControl {
-/*    *//** Sin value at NE corner. *//*
+/*    /** Sin value at NE corner. *//*
     protected static final float SIN = MathUtils.sin(MathUtils.atan2(1f, 1f));
     *//** Cos value at NE corner. *//*
     protected static final float COS = MathUtils.cos(MathUtils.atan2(1f, 1f));*/
@@ -29,7 +27,7 @@ public abstract class AbstractControl implements PlayerControl, ScreenControl {
     public void setControlListener(final PlayerControlListener listener) {
         this.listener = listener;
     }
-    private final Array<ViewControlListener> viewListeners = new Array<>();
+    private final Array<ViewControlListener> viewControlListeners = new Array<>();
     private ViewControlListener currentView;
     @Override
     public void setCurrentView(ViewControlListener viewControlListeners) {
@@ -38,17 +36,20 @@ public abstract class AbstractControl implements PlayerControl, ScreenControl {
 
     @Override
     public void addListeners(ViewControlListener... viewControlListeners) {
-        this.viewListeners.addAll(viewControlListeners);
+        this.viewControlListeners.addAll(viewControlListeners);
     }
 
+    protected Array<ViewControlListener> getListeners() {
+        return viewControlListeners;
+    }
     protected ViewControlListener getListener(Class<?> tclass) {
         for (val listener :
-                new Array.ArrayIterator<>(viewListeners)) {
+                new Array.ArrayIterator<>(viewControlListeners)) {
             if (listener.getViewClass().equals(tclass)){
                 return listener;
             }
         }
-        throw new NoSuchElementException();
+        return null;
     }
 
     protected ViewControlListener getCurrentView() {
@@ -78,8 +79,8 @@ public abstract class AbstractControl implements PlayerControl, ScreenControl {
 
     @Override
     public void clear() {
-        if(viewListeners.size > 0){
-            viewListeners.clear();
+        if(viewControlListeners.size > 0){
+            viewControlListeners.clear();
         }
         currentView = null;
     }

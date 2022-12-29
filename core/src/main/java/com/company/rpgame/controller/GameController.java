@@ -1,7 +1,6 @@
 package com.company.rpgame.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -27,7 +26,7 @@ public class GameController extends StandardViewShower implements DefaultViewCon
     @Inject private Box2DService world;
     @Inject private PlayerService player;
     @Inject private InventoryService inventoryService;
-    @Inject private ScreenService screenService;
+    @Inject private GameScreenService gameScreenService;
     @Inject private ViewService actionsService;
     @Inject private InventoryViewControllerControl inventoryDialogController;
     @Inject private SettingsDialogController settingsDialogController;
@@ -66,18 +65,14 @@ public class GameController extends StandardViewShower implements DefaultViewCon
         } catch (NoSpawnPointException e) {
             throw new RuntimeException(e);
         }
-        screenService.initiate();
+        gameScreenService.initiate();
         inventoryService.setStage(stage);
 
         actionsService.initiate();
         actionsService.addListeners(this, inventoryDialogController, settingsDialogController);
         actionsService.setCurrentListener(this);
         actionsService.attachListener(stage);
-        super.show(stage, Actions.sequence(action, Actions.run(() -> {
-            final InputMultiplexer stageMultiplexer = new InputMultiplexer(stage);
-            player.initiateControls(stageMultiplexer);
-            Gdx.input.setInputProcessor(stageMultiplexer);
-        })));
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -92,7 +87,7 @@ public class GameController extends StandardViewShower implements DefaultViewCon
         stage.act(delta);
         world.render(delta);
         player.render(delta);
-        screenService.render(delta);
+        gameScreenService.render(delta);
         stage.draw();
         if(world.isRunning()){
             actionsService.setCurrentListener(this);
@@ -101,14 +96,14 @@ public class GameController extends StandardViewShower implements DefaultViewCon
 
     @LmlAction("toggleWorldState")
     public void toggle(ImageButton button){
-        screenService.toggleGameState(button);
+        gameScreenService.toggleGameState(button);
     }
     @Override
     public void dispose(){
         world.dispose();
         player.dispose();
         stage.dispose();
-        screenService.dispose();
+        gameScreenService.dispose();
         actionsService.dispose();
     }
 

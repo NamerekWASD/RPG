@@ -1,8 +1,6 @@
 package com.company.rpgame.service.controls.controlAbstract.controlType;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,44 +21,24 @@ public class TouchControl extends AbstractControl {
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return false;
-            }
-
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, final int pointer) {
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, final int pointer, final int button) {
-            }
-        });
-    }
-    @Override
-    public void attachInputListener(final InputMultiplexer inputMultiplexer) {
-        inputMultiplexer.addProcessor(new InputAdapter() {
-            @Override
-            public boolean touchDown(final int screenX, final int screenY, final int pointer, final int button) {
-                updateDirection(screenX, Gdx.graphics.getHeight() - screenY);
+                updateDirection(x, Gdx.graphics.getHeight() - y);
                 isMoving = true;
                 getListener().jump();
                 return false;
             }
 
             @Override
-            public boolean touchDragged(final int screenX, final int screenY, final int pointer) {
-                updateDirection(screenX, Gdx.graphics.getHeight() - screenY);
-                return false;
+            public void touchDragged(InputEvent event, float x, float y, final int pointer) {
+                updateDirection(x, Gdx.graphics.getHeight() - x);
             }
 
             @Override
-            public boolean touchUp(final int screenX, final int screenY, final int pointer, final int button) {
+            public void touchUp(InputEvent event, float x, float y, final int pointer, final int button) {
                 stop();
                 isMoving = false;
-                return false;
             }
         });
     }
-
     private void updateDirection(final float x, final float y) {
         this.x = x;
         this.y = y;
