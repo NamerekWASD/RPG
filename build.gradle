@@ -1,3 +1,6 @@
+
+
+
 buildscript {
 	repositories {
 		mavenCentral()
@@ -32,8 +35,9 @@ allprojects {
 
 configure(subprojects - project(':android')) {
 	apply plugin: 'java-library'
-	sourceCompatibility = 1.8
 	compileJava {
+		sourceCompatibility = JavaVersion.VERSION_18
+		targetCompatibility = JavaVersion.VERSION_18
 		options.incremental = true
 	}
 	dependencies {

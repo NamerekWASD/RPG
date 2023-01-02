@@ -135,4 +135,8 @@ public class Player extends Entity implements PlayerControlListener {
     public void updateEquipped(Array<Item> equippedItems) {
         inventory.setEquippedItems(equippedItems);
     }
+
+    public Size getNatureSize() {
+        return natureSize;
+    }
 }

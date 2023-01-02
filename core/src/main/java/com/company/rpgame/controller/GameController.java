@@ -1,11 +1,7 @@
 package com.company.rpgame.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.Disposable;
 import com.company.rpgame.controller.dialog.InventoryViewControllerControl;
@@ -27,7 +23,7 @@ public class GameController extends StandardViewShower implements DefaultViewCon
     @Inject private PlayerService player;
     @Inject private InventoryService inventoryService;
     @Inject private GameScreenService gameScreenService;
-    @Inject private ViewService actionsService;
+    @Inject private ViewService viewService;
     @Inject private InventoryViewControllerControl inventoryDialogController;
     @Inject private SettingsDialogController settingsDialogController;
     @ViewStage
@@ -37,24 +33,15 @@ public class GameController extends StandardViewShower implements DefaultViewCon
     public void showSettings(){
         world.pause();
         interfaceService.showDialog(SettingsDialogController.class);
-        SettingsDialogController.getDialog().clearActions();
-        createAction(SettingsDialogController.getDialog());
+        //TODO: create action presets for dialog in action service
 
     }
     @LmlAction("gotoInventory")
     public void showInventoryDialog(){
         world.pause();
         interfaceService.showDialog(InventoryViewControllerControl.class);
-        InventoryViewControllerControl.getDialog().clearActions();
-        createAction(InventoryViewControllerControl.getDialog());
         inventoryService.fillInventory();
-    }
-    private void createAction(Actor actor){
-        if (actor == null) {
-            return;
-        }
-        actor.addAction(Actions.sequence(Actions.rotateTo(90),
-                Actions.rotateTo(0, 0.3f, Interpolation.fastSlow)));
+        //TODO: create action presets for dialog in action service
     }
 
     @Override
@@ -68,11 +55,11 @@ public class GameController extends StandardViewShower implements DefaultViewCon
         gameScreenService.initiate();
         inventoryService.setStage(stage);
 
-        actionsService.initiate();
-        actionsService.addListeners(this, inventoryDialogController, settingsDialogController);
-        actionsService.setCurrentListener(this);
-        actionsService.attachListener(stage);
-        Gdx.input.setInputProcessor(stage);
+        viewService.initiate();
+        viewService.addListeners(this, inventoryDialogController, settingsDialogController);
+        viewService.setCurrentListener(this);
+        viewService.attachListener(stage);
+        super.show(stage, action);
     }
 
     @Override
@@ -84,13 +71,13 @@ public class GameController extends StandardViewShower implements DefaultViewCon
 
     @Override
     public void render(final Stage stage, final float delta) {
-        stage.act(delta);
         world.render(delta);
         player.render(delta);
         gameScreenService.render(delta);
+        stage.act(delta);
         stage.draw();
         if(world.isRunning()){
-            actionsService.setCurrentListener(this);
+            viewService.setCurrentListener(this);
         }
     }
 
@@ -100,11 +87,11 @@ public class GameController extends StandardViewShower implements DefaultViewCon
     }
     @Override
     public void dispose(){
+        stage.dispose();
         world.dispose();
         player.dispose();
-        stage.dispose();
         gameScreenService.dispose();
-        actionsService.dispose();
+        viewService.dispose();
     }
 
     @Override

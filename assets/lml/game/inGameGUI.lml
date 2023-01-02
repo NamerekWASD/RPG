@@ -3,7 +3,7 @@
 
 <dialog id="dialog" movable="false">
     <table fillparent="true" defaultpad="16" onecolumn="true">
-        <textbutton onchange="close">@continue</textbutton>
+        <textbutton onchange="continue">@continue</textbutton>
         <textbutton onchange="goto:menu">@gotoMenu</textbutton>
     </table>
 </dialog>

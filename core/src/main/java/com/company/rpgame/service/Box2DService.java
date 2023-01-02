@@ -3,7 +3,6 @@ package com.company.rpgame.service;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.company.rpgame.camera.ParallaxBackground;
 import com.company.rpgame.exception.NoSpawnPointException;
 import com.company.rpgame.helper.Box2D.TiledMapUtils;
 import com.company.rpgame.service.listeners.WorldListener;
@@ -32,10 +32,13 @@ public class Box2DService extends Game {
     private final Batch batch = new SpriteBatch();
     @Inject
     private CameraService cameraService;
+    @Inject
+    private PlayerService playerService;
     private Box2DDebugRenderer bdr;
 
     private World world;
     private TiledMap map;
+    private ParallaxBackground parallax;
     private OrthogonalTiledMapRenderer tmr;
 
     private Status status;
@@ -47,33 +50,27 @@ public class Box2DService extends Game {
     }
 
     public void create() {
-        dispose();
+        parallax = new ParallaxBackground("images/parallax");
 
         bdr = new Box2DDebugRenderer();
-        status = Status.RUN;
-        world = new World(GRAVITY, true);
 
+        world = new World(GRAVITY, true);
         world.setContactListener(new WorldListener());
 
         map = new TmxMapLoader().load("maps/test/newMap.tmx");
         parser.load(world, map);
         parser.getFixtures().forEach((fixture) -> fixture.value.setUserData(this));
-
         tmr = new OrthogonalTiledMapRenderer(map, batch);
+
+        status = Status.RUN;
     }
 
 
-    public void render(float delta) {
-        if(status == Status.RUN){
-            Gdx.gl.glClearColor(.25f,.5f,.8f,.9f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            update(delta);
-        }else{
-            Gdx.gl.glClearColor(1f, 1f, 1f, 0.5f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        }
+    public void render(float ignoredDelta) {
+        parallax.draw(playerService.getPlayer().getPlayerCenter());
+        if(isRunning())
+            update();
         tmr.render();
-
         bdr.render(world, cameraService.getProjectionMatrix().scl(PPM));
         if(Gdx.input.isKeyPressed(Input.Keys.C)){
             bdr.setDrawBodies(false);
@@ -82,6 +79,11 @@ public class Box2DService extends Game {
             bdr.setDrawInactiveBodies(true);
             bdr.setDrawBodies(true);
         }
+    }
+
+    private void update() {
+        tmr.setView((OrthographicCamera) cameraService.getCamera());
+        world.step(DEFAULT_STEP, 8, 3);
     }
 
     @Override
@@ -117,22 +119,22 @@ public class Box2DService extends Game {
             map.dispose();
             map = null;
         }
+        if(parallax != null){
+            parallax.dispose();
+            parallax = null;
+        }
     }
 
-    private void update(final float ignoredDelta) {
-        world.step(DEFAULT_STEP, 8, 3);
-        tmr.setView((OrthographicCamera) cameraService.getCamera());
-    }
     public boolean isRunning() {
         return status == Status.RUN;
     }
     public World getWorld() {
         return world;
     }
-    public Vector2 getWorldSpawnPoint() throws NoSpawnPointException {
+    public Vector2 getPlayerSpawnPoint() throws NoSpawnPointException {
         Vector2 spawnPoint = new Vector2();
 
-        RectangleMapObject spawnPointRectangle = TiledMapUtils.fetchRectangle(map, "Utils", "spawnPoint");
+        RectangleMapObject spawnPointRectangle = TiledMapUtils.fetchRectangle(map, "SpawnPoints", "playerSpawnPoint");
         if(Objects.isNull(spawnPointRectangle)){
             throw new NoSpawnPointException("Map must have spawn point!");
         }

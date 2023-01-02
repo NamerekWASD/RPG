@@ -82,6 +82,5 @@ public abstract class AbstractControl implements PlayerControl, ScreenControl {
         if(viewControlListeners.size > 0){
             viewControlListeners.clear();
         }
-        currentView = null;
     }
 }

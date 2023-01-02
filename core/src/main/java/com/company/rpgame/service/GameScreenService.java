@@ -33,7 +33,8 @@ public class GameScreenService implements Disposable {
 
 
     public void render(final float delta){
-        update();
+        if(world.isRunning())
+            update();
         playerHealthBar.render(delta, batch);
     }
 

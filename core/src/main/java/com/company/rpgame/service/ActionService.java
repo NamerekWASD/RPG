@@ -35,19 +35,26 @@ public class ActionService implements Disposable {
             scheduleAction.begin();
         }
     }
-    private float getLastActorActionTime(){
-        return scheduleActions.size == 0 ? 0.1f : scheduleActions.peek().getActionLastTime();
+    private float getLastActionRemainingTime(){
+        return scheduleActions.size == 0 ? 0.1f : scheduleActions.peek().getActionRemainingTime();
+    }
+    private float getAllActionsRemainingTime(){
+        float totalTime = 0;
+        for (ScheduleAction scheduleAction :
+                new Array.ArrayIterator<>(scheduleActions)) {
+            totalTime += scheduleAction.getActionRemainingTime();
+        }
+        return totalTime;
     }
     public void appearFromRight(Actor actor) {
-        Vector2 stagePositionOfParent = actor.localToStageCoordinates(
-                new Vector2(actor.getParent().getX(), actor.getParent().getY()));
+        Vector2 previousPosition = new Vector2(actor.getX(), actor.getY());
 
         scheduleAction(new SequenceSchedule
                 (actor, Actions.sequence(Actions.hide(),
-                        Actions.delay(getLastActorActionTime()/2),
-                        Actions.moveBy( actor.getWidth(), 0),
+                        Actions.delay(getAllActionsRemainingTime()/2),
+                        Actions.moveTo(actor.getParent().getWidth(), previousPosition.y),
                         Actions.show(),
-                        Actions.moveTo(stagePositionOfParent.x, stagePositionOfParent.y, 0.5f, Interpolation.fastSlow))));
+                        Actions.moveTo(previousPosition.x, previousPosition.y, 0.5f, Interpolation.fastSlow))));
     }
 
     @Override

@@ -12,7 +12,7 @@ public class LocaleController implements ViewRenderer {
     @Override
     public void render(Stage stage, float delta) {
         stage.act(delta);
-        Gdx.gl.glClearColor(.5f,.5f,.5f,1f);
+        Gdx.gl.glClearColor(1,1,1,1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
     }

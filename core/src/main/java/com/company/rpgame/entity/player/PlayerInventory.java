@@ -1,15 +1,11 @@
 package com.company.rpgame.entity.player;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.company.rpgame.entity.items.armor.Chest;
 import com.company.rpgame.entity.items.armor.Head;
 import com.company.rpgame.entity.items.basic.Armor;
 import com.company.rpgame.entity.items.basic.Item;
 import com.company.rpgame.entity.items.weapon.melee.Sword;
-import com.company.rpgame.helper.AssetsUtil;
-
-import static com.company.rpgame.helper.Constants.IMAGES_DIRECTORY;
 
 
 public class PlayerInventory {
@@ -19,24 +15,20 @@ public class PlayerInventory {
     public PlayerInventory(){
         inventoryItems = new Array<>(capacity);
         equippedItems = new Array<>();
-        Image image = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "knife"));
         Sword sword = new Sword(10.0, 50.0, 10.0);
-        sword.setImage(image);
+        sword.setTexture("knife");
         sword.setDescription("some sword");
 
-        Image newImage = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "knife"));
         Sword newSword = new Sword(10.0, 50.0, 10.0);
-        newSword.setImage(newImage);
+        newSword.setTexture("knife");
         newSword.setDescription("another one");
 
-        Image chestPic = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "ironArmor"));
         Armor chest = new Chest();
-        chest.setImage(chestPic);
+        chest.setTexture("ironArmor");
         chest.setDescription("someDesc");
 
-        Image helmPic = new Image(AssetsUtil.getTexture(IMAGES_DIRECTORY, "plasticHelm"));
         Armor head = new Head();
-        head.setImage(helmPic);
+        head.setTexture("plasticHelm");
         head.setDescription("someDesc");
 
         inventoryItems.add(sword, newSword, chest, head);

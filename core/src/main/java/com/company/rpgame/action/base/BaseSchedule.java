@@ -56,7 +56,7 @@ public class BaseSchedule implements ScheduleAction {
     }
 
     @Override
-    public float getActionLastTime() {
+    public float getActionRemainingTime() {
         if(action instanceof TemporalAction){
             TemporalAction temporalAction = (TemporalAction) action;
             return temporalAction.getDuration() - temporalAction.getTime();

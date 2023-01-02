@@ -13,34 +13,31 @@ import com.github.czyzby.autumn.mvc.config.AutumnActionPriority;
 @Component
 public class ControlService {
     @Inject private ControlPreference controlPreference;
-    private PlayerControl playerControl;
-    private ScreenControl screenControl;
+    private Control generalControl;
 
     @Initiate
     public void readControlsFromPreferences() {
-        Control control = controlPreference.getDefault().getType().create(controlPreference.getDefault());
-        playerControl = (PlayerControl) control;
-        screenControl = (ScreenControl) control;
+        generalControl = controlPreference.getDefault().getType().create(controlPreference.getDefault());
     }
 
     @Destroy(priority = AutumnActionPriority.TOP_PRIORITY)
     public void saveControlsInPreferences() {
-        controlPreference.set(playerControl.toData());
-        controlPreference.set(screenControl.toData());
+        controlPreference.set(generalControl.toData());
     }
 
-    public void setPlayerControl(final PlayerControl playerControl) {
-        this.playerControl = playerControl;
+    public void setControl(final Control control) {
+        this.generalControl = control;
     }
 
-    public void setScreenControl(final ScreenControl screenControl) {
-        this.screenControl = screenControl;
-    }
     public PlayerControl getPlayerControl() {
-        return playerControl;
+        return (PlayerControl) generalControl;
     }
 
     public ScreenControl getScreenControl() {
-        return screenControl;
+        return (ScreenControl) generalControl;
+    }
+
+    public Control getGeneralControl() {
+        return generalControl;
     }
 }

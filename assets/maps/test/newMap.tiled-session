@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "newMap.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 1,
+            "scale": 0.75,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 704,
-                "y": 4480
+                "x": 1346.6666666666665,
+                "y": 4292
             }
         },
         "newMap.tmx#House": {

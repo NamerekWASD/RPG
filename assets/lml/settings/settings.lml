@@ -3,6 +3,9 @@
 
 <table onecolumn="true" defaultpad="6" tablealign="center" fillparent="true" defaultfillx="true" background="cframe-m" align="center" >
 	<label textalign="center">@settings</label>
+	<!--TODO: graphic settings-->
+<!--	<textbutton onchange="goto:graphicSettings">@editControls</textbutton>-->
+	<textbutton onchange="goto:editControls">@editControls</textbutton>
 	<textbutton onchange="goto:volume">@volumeMaster</textbutton>
 	<textbutton onchange="goto:locale">@locale</textbutton>
 	<!-- "close" action is defined in Global class. -->

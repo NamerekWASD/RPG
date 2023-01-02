@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE stack SYSTEM "dtd\lml.dtd">
 <stack fillparent="true">
-	<table defaultprefwidth="200" tablealign="bottomRight" padbottom="140">
+	<table tablealign="right" padright="30" defaultpad="16" defaultprefwidth="200" onecolumn="true">
 		<textbutton id="start" onchange="startGame" >@play</textbutton>
-	</table>
-	<table defaultprefwidth="200" tablealign="bottomRight" padbottom="80">
 		<textbutton id="settings" onchange="goto:settings">@settings</textbutton>
-	</table>
-	<table defaultprefwidth="200" tablealign="bottomRight" padbottom="20">
 		<textbutton id="exit" onchange="showSureDialog">@exit</textbutton>
 	</table>
 </stack>

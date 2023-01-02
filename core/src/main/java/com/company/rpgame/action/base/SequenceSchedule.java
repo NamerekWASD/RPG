@@ -45,7 +45,7 @@ public class SequenceSchedule extends BaseSchedule {
     }
 
     @Override
-    public float getActionLastTime() {
+    public float getActionRemainingTime() {
         return scanAllActionsAndCalculateTotalTime(action, 0);
 
     }

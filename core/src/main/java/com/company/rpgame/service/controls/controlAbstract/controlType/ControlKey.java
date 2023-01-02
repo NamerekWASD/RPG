@@ -1,10 +1,14 @@
 package com.company.rpgame.service.controls.controlAbstract.controlType;
 
-public enum PlayerControlKey {
+public enum ControlKey {
+    // Player keys
     UP,
     DOWN,
     LEFT,
     RIGHT,
     JUMP,
-    ATTACK
+    ATTACK,
+    // Screen keys
+    Back,
+    InvokeInventory,
 }

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="64" height="72" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="12">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="200" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="12">
+ <properties>
+  <property name="Parallax" value="Mountain"/>
+ </properties>
  <tileset firstgid="1" name="newTileSet" tilewidth="64" tileheight="64" tilecount="12" columns="3">
   <image source="../../images/newTileSet.png" width="192" height="256"/>
  </tileset>
@@ -7,22 +10,27 @@
   <image source="../../images/House.png" width="512" height="512"/>
  </tileset>
  <objectgroup id="4" name="Collision" class="123">
-  <object id="5" name="floor" class="object" x="0" y="4480">
+  <object id="5" name="floor" class="object" x="-9.09495e-13" y="4480">
    <properties>
     <property name="bodyType" value="StaticBody"/>
     <property name="type" value="object"/>
    </properties>
-   <polygon points="0,0 2880,0 2880,128 0,128"/>
+   <polygon points="0,0 5952,0 5952,576 0,576"/>
   </object>
  </objectgroup>
- <objectgroup id="5" name="Utils">
-  <object id="10" name="spawnPoint" x="704" y="4480">
+ <objectgroup id="5" name="SpawnPoints">
+  <object id="10" name="playerSpawnPoint" x="2124" y="4396">
    <point/>
   </object>
  </objectgroup>
- <layer id="3" name="1Layer" width="64" height="72">
+ <layer id="3" name="1Layer" width="200" height="100">
   <data encoding="base64" compression="zlib">
-   eJzty+1OAXAYQHF8JzGURsVEmvehtPK2SN3//TgX4b89tvPbzseTyUiSJEmSJEmSJEmSJEmSJEmSJEmSJEmSoshTgW6oSLdUonLiN4oKValGd3RPdXpI/EbRoCY90hM9U4vaid8oOvRCXerRK/XpLfEbxYCGNKIxTWhKs8RvFHNa0JLe6YNW9Jn4jeKLvmlNG9rSjvaJ3yh+6EBH+qUT/dF/4jeC3BV2Sdkr7JLORDATyA==
+   eJzt0kdKQFEUREF1bsaMGTNmzJgx738/9h7k+b3+KjjDnvXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwM8Np5E0msbSeJpIk423UMFUmk4zaTbNpfm00HgLFSympbScVtJqWkvrjbdQwUbaTFtpO+2k3bTXeAsV7KeDdJiO0nE6SaeNt1DBWTpPF+kyXaXrdNN4CxXcprt0nx7SY3pKz423UMFLek1v6T19pM/01XgLf92Qfj3qGNSvRx1df6WPUUfXX+lj1NH1V/oYdXT9lT5GHV1/pY9RR9df6WPU0fVX+hgAAAAAAAAAAAAAAAAAAAAA/BffVBcW4w==
+  </data>
+ </layer>
+ <layer id="6" name="2Layer" width="200" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztyiEOAAAIAzE8//8vFgmS0KrLsggAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD7LQfdt8wcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG4rUA4ATg==
   </data>
  </layer>
 </map>

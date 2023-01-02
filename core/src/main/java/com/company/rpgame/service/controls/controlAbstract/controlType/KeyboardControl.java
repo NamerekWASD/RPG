@@ -8,23 +8,22 @@ import com.badlogic.gdx.utils.IntSet;
 import com.company.rpgame.service.controls.controlAbstract.AbstractButtonControl;
 import com.company.rpgame.service.controls.controlAbstract.ControlType;
 
-import static com.company.rpgame.service.controls.controlAbstract.controlType.PlayerControlKey.*;
-import static com.company.rpgame.service.controls.controlAbstract.controlType.ScreenControlKey.Back;
-import static com.company.rpgame.service.controls.controlAbstract.controlType.ScreenControlKey.InvokeInventory;
+import static com.company.rpgame.service.controls.controlAbstract.controlType.ControlKey.*;
 
 public class KeyboardControl extends AbstractButtonControl {
     private static final int initialCapacity = 2;
 
     public KeyboardControl() {
         // Initial settings:
-        setPlayerKey(UP, initiateKey(Input.Keys.W));
-        setPlayerKey(DOWN, initiateKey(Input.Keys.S));
-        setPlayerKey(LEFT, initiateKey(Input.Keys.A));
-        setPlayerKey(RIGHT, initiateKey(Input.Keys.D));
-        setPlayerKey(JUMP, initiateKey(Input.Keys.SPACE));
+        playerKeys.put(UP, initiateKey(Input.Keys.W));
+        playerKeys.put(DOWN, initiateKey(Input.Keys.S));
+        playerKeys.put(LEFT, initiateKey(Input.Keys.A));
+        playerKeys.put(RIGHT, initiateKey(Input.Keys.D));
+        playerKeys.put(JUMP, initiateKey(Input.Keys.SPACE));
+        playerKeys.put(ATTACK, initiateKey(Input.Keys.J));
 
-        setScreenKeys(InvokeInventory, initiateKey(Input.Keys.TAB, Input.Keys.E));
-        setScreenKeys(Back, initiateKey(Input.Keys.ESCAPE));
+        screenKeys.put(InvokeInventory, initiateKey(Input.Keys.TAB, Input.Keys.E));
+        screenKeys.put(Back, initiateKey(Input.Keys.ESCAPE));
 }
 
     private IntSet initiateKey(int... keys) {
@@ -45,16 +44,16 @@ public class KeyboardControl extends AbstractButtonControl {
                 if(!pressedButtons.add(keycode)){
                     return false;
                 }
-                if(getListeners().size != 0){
-                    if(updateViews()){
-                        resetScreenKeys();
-                        return true;
-                    }
-                }
+
                 if(getListener() != null){
                     updateMovement();
+                }
+
+                if (getListeners().size != 0 && updateViews()) {
+                    resetScreenKeys();
                     return true;
                 }
+
                 return false;
             }
             @Override
@@ -62,9 +61,13 @@ public class KeyboardControl extends AbstractButtonControl {
                 if(!pressedButtons.remove(keycode)){
                     return false;
                 }
-                System.out.println("out");
-                updateMovement();
-                return true;
+
+                if(getListener() != null){
+                    updateMovement();
+                    return true;
+                }
+
+                return false;
             }
         });
     }

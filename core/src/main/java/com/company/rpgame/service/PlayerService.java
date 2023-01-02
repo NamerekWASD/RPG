@@ -21,16 +21,16 @@ public class PlayerService implements Disposable {
     @Inject
     private ControlService controlService;
     @Inject
-    private Box2DService worldService;
+    private Box2DService world;
     private Player player;
 
     public void initiate() throws NoSpawnPointException {
-        player = new Player(controlService.getPlayerControl(), worldService.getWorld(),
-                worldService.getWorldSpawnPoint(), cameraService.getViewport());
+        player = new Player(controlService.getPlayerControl(), world.getWorld(),
+                world.getPlayerSpawnPoint(), cameraService.getViewport());
     }
 
     public void render(float delta) {
-        if(worldService.isRunning()){
+        if(world.isRunning()){
             update(delta);
         }
         player.render(batch);
@@ -45,7 +45,7 @@ public class PlayerService implements Disposable {
     private void updateCamera(){
         Vector3 position = cameraService.getViewport().getCamera().position;
         position.x = player.getBodyPosition().x * PPM;
-        position.y = player.getBodyPosition().y * PPM;
+        position.y = player.getBodyPosition().y * PPM + player.getNatureSize().getHeight();
         cameraService.setPosition(position);
     }
 

@@ -2,10 +2,8 @@
 <!DOCTYPE table SYSTEM "dtd\lml.dtd">
 
 <table fillparent="true" tablealign="topRight">
-    <verticalgroup>
-        <table defaultsize="50" onecolumn="true" defaultpad="10" background="topRightFrame">
-            <imagebutton image="set" onchange="gotoSettings"/>
-            <imagebutton id="inventoryButton" image="inventory" onchange="gotoInventory"/>
-        </table>
-    </verticalgroup>
+    <table defaultsize="50" onecolumn="true" defaultpad="10" background="topRightFrame">
+        <imagebutton image="set" onchange="gotoSettings"/>
+        <imagebutton image="inventory" onchange="gotoInventory"/>
+    </table>
 </table>

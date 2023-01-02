@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE table SYSTEM "dtd\lml.dtd">
+
+<table id="editControls" onecolumn="true" fillparent="true">
+    <label style="title" text="@editControls"/>
+    <table id="mainTable"/>
+    <label>@editControlsPrompt</label>
+    <:assign key="width" value="250"/>
+    <:assign key="height" value="60"/>
+    <isolate>
+        <table id="TOUCH">
+            <label>@touchControlsPrompt</label>
+        </table>
+        <scrollpane id="KEYBOARD" fillparent="true">
+            <table id="keysTable" defaultwidth="{width}" defaultheight="{height}" defaultpad="10">
+                <:each value="$getKeys">
+                    <:row>
+                        <label text="{value}" textalign="center"/>
+                        <splitpane/>
+                        <textbutton onchange="setKey"/>
+                    </:row>
+
+                </:each>
+            </table>
+        </scrollpane>
+    </isolate>
+    <textbutton onclick="close" onchange="goto:settings">@back</textbutton>
+</table>

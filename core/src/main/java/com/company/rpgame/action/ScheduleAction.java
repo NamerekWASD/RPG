@@ -11,5 +11,5 @@ public interface ScheduleAction {
 
     boolean isComplete();
 
-    float getActionLastTime();
+    float getActionRemainingTime();
 }

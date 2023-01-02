@@ -36,12 +36,12 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
     @LmlAction("continue")
     public void returnToGame(){
         gameScreenService.resumeGame(this.getClass());
-        dialog.clearActions();
         addAction(dialog);
         inventory.destroy();
     }
 
     private void addAction(Window dialog) {
+        dialog.clearActions();
         dialog.addAction(Actions.sequence(Actions.rotateTo(90, 0.3f, Interpolation.slowFast),
                 Actions.removeActor()));
     }
@@ -49,10 +49,6 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
     public int getCellCount(){
         return inventory.getCellCount();
     }
-    public static Window getDialog(){
-        return dialog;
-    }
-
     @Override
     public Class<?> getViewClass() {
         return this.getClass();
@@ -60,7 +56,11 @@ public class InventoryViewControllerControl implements ActionContainer, ViewCont
 
     @Override
     public void invoke() {
-        game.showInventoryDialog();
+        if(dialog == null || dialog.getParent() == null){
+            game.showInventoryDialog();
+        }else {
+            backAction();
+        }
     }
 
     @Override

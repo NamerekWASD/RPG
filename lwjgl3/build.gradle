@@ -3,7 +3,8 @@ apply plugin: 'application'
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 mainClassName = 'com.company.rpgame.lwjgl3.Lwjgl3Launcher'
 eclipse.project.name = appName + '-lwjgl3'
-sourceCompatibility = 1.8
+java.targetCompatibility = JavaVersion.VERSION_18
+java.sourceCompatibility = JavaVersion.VERSION_18
 
 dependencies {
 	implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
@@ -56,7 +57,5 @@ jar {
 }
 
 // Equivalent to the jar task; here for compatibility with gdx-setup.
-task dist(dependsOn: [jar]) {
+tasks.register('dist') {
 }
-
-java.targetCompatibility = JavaVersion.VERSION_1_8

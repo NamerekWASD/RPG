@@ -1,7 +1,7 @@
 package com.company.rpgame.controller.dialog;
 
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Disposable;
 import com.company.rpgame.controller.GameController;
 import com.company.rpgame.service.GameScreenService;
 import com.company.rpgame.service.ViewService;
@@ -14,7 +14,7 @@ import com.github.czyzby.lml.annotation.LmlActor;
 import com.github.czyzby.lml.parser.action.ActionContainer;
 
 @ViewDialog(id="settingsDialog", value = "lml/game/inGameGUI.lml")
-public class SettingsDialogController implements ActionContainer, ViewControlListener, ViewDialogShower {
+public class SettingsDialogController implements ActionContainer, ViewControlListener, ViewDialogShower, Disposable {
     @Inject private GameScreenService gameScreenService;
     @Inject private GameController game;
     @Inject private ViewService viewService;
@@ -24,12 +24,7 @@ public class SettingsDialogController implements ActionContainer, ViewControlLis
     @LmlAction("continue")
     public void Continue(){
         gameScreenService.resumeGame(this.getClass());
-        dialog.clearActions();
-        dialog.addAction(Actions.removeActor());
-    }
-
-    public static Window getDialog(){
-        return dialog;
+        dialog.remove();
     }
 
     @Override
@@ -39,7 +34,9 @@ public class SettingsDialogController implements ActionContainer, ViewControlLis
 
     @Override
     public void invoke() {
-        game.showSettings();
+        if(dialog == null){
+            game.showSettings();
+        }
     }
 
     @Override
@@ -49,5 +46,10 @@ public class SettingsDialogController implements ActionContainer, ViewControlLis
     @Override
     public void doBeforeShow(Window dialog) {
         viewService.setCurrentListener(this);
+    }
+
+    @Override
+    public void dispose() {
+        dialog.remove();
     }
 }
